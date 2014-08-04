@@ -162,14 +162,6 @@ namespace Micspam
 			}
 		}
 
-		private ISoundOut GetSoundOut()
-		{
-			if (WasapiOut.IsSupportedOnCurrentPlatform)
-				return new WasapiOut();
-			else
-				return new DirectSoundOut();
-		}
-
 		private void trackVolume_Scroll(object sender, EventArgs e)
 		{
 			soundOut.Volume = (float)trackVolume.Value / (float)trackVolume.Maximum;
