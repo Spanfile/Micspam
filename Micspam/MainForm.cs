@@ -24,6 +24,7 @@ namespace Micspam
 		IWaveSource soundSource;
 
 		List<string> fileExtensions;
+		Dictionary<string, string> fileExtensionNames;
 
 		public MainForm()
 		{
@@ -39,6 +40,10 @@ namespace Micspam
 			fileExtensions = new List<string>();
 			fileExtensions.Add(".wav");
 			fileExtensions.Add(".mp3");
+
+			fileExtensionNames = new Dictionary<string, string>();
+			fileExtensionNames.Add(".wav", "Waveform");
+			fileExtensionNames.Add(".mp3", "MP3");
 		}
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -50,6 +55,8 @@ namespace Micspam
 		{
 			btnPlay.Text = "Play";
 			btnPlay.Enabled = listSounds.SelectedItems.Count > 0;
+
+			Console.WriteLine("Playback stopped");
 		}
 
 		private void btnFindDevices_Click(object sender, EventArgs e)
@@ -73,6 +80,8 @@ namespace Micspam
 			device = listInputDevices.SelectedItems[0].Tag as MMDevice;
 			lblSelectedDevice.Text = "Output device: " + device.FriendlyName;
 			groupSounds.Enabled = true;
+
+			Console.WriteLine("Device selected: {0}", device.FriendlyName);
 		}
 
 		private void btnFindWavSources_Click(object sender, EventArgs e)
@@ -82,8 +91,6 @@ namespace Micspam
 				MessageBox.Show(this, "Couldn't find audio source directory! (sources)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-
-			btnFindAudioSources.Text = "Finding...";
 
 			Console.WriteLine("Finding audio sources from \"sources\"...");
 
@@ -101,8 +108,9 @@ namespace Micspam
 				int length = AudioLength.Get(file);
 				string path = Path.GetFullPath(file);
 				string friendlyPath = Path.Combine(Path.GetDirectoryName(file), Path.GetFileName(file));
+				string type = fileExtensionNames[Path.GetExtension(file)];
 
-				AudioInfo info = new AudioInfo(index, name, length, path, friendlyPath);
+				AudioInfo info = new AudioInfo(index, name, length, path, friendlyPath, type);
 				audioInfos.Add(info);
 
 				Console.WriteLine("Found audio. ID: {0}, name: {1}, friendly path: {2}", info.ID, info.Name, info.FriendlyPath);
@@ -118,13 +126,12 @@ namespace Micspam
 					info.ID.ToString(),
 					info.Name,
 					TimeSpan.FromMilliseconds(info.Length).ToString("%m\\:ss"),
+					info.Type,
 					info.FriendlyPath
 				});
 				item.Tag = info;
 				listSounds.Items.Add(item);
 			}
-
-			btnFindAudioSources.Text = "Find audio sources";
 		}
 
 		private void listSounds_SelectedIndexChanged(object sender, EventArgs e)
@@ -137,10 +144,6 @@ namespace Micspam
 
 		private void btnPlay_Click(object sender, EventArgs e)
 		{
-			// failsafe if button is enabled for some reason
-			if (listSounds.SelectedItems.Count < 1)
-				return;
-
 			if (soundOut.PlaybackState == PlaybackState.Stopped)
 			{
 				AudioInfo info = listSounds.SelectedItems[0].Tag as AudioInfo;
@@ -175,14 +178,16 @@ namespace Micspam
 		public int Length { get; private set; }
 		public string Path { get; private set; }
 		public string FriendlyPath { get; private set; }
+		public string Type { get; private set; }
 
-		public AudioInfo(int id, string name, int length, string path, string friendlyPath)
+		public AudioInfo(int id, string name, int length, string path, string friendlyPath, string type)
 		{
 			ID = id;
 			Name = name;
 			Length = length;
 			Path = path;
 			FriendlyPath = friendlyPath;
+			Type = type;
 		}
 	}
 }
