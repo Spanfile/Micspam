@@ -28,90 +28,106 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.groupDevices = new System.Windows.Forms.GroupBox();
 			this.btnFindDevices = new System.Windows.Forms.Button();
 			this.btnSelectDevice = new System.Windows.Forms.Button();
 			this.listInputDevices = new System.Windows.Forms.ListView();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.btnRemove = new System.Windows.Forms.Button();
+			this.groupSounds = new System.Windows.Forms.GroupBox();
+			this.trackVolume = new System.Windows.Forms.TrackBar();
 			this.listSounds = new System.Windows.Forms.ListView();
+			this.columnID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSoundName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSoundLength = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSoundPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.btnPlay = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.btnFindWavSources = new System.Windows.Forms.Button();
+			this.lblSelectedDevice = new System.Windows.Forms.Label();
+			this.groupDevices.SuspendLayout();
+			this.groupSounds.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackVolume)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// groupBox1
+			// groupDevices
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.groupDevices.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.groupBox1.Controls.Add(this.btnFindDevices);
-			this.groupBox1.Controls.Add(this.btnSelectDevice);
-			this.groupBox1.Controls.Add(this.listInputDevices);
-			this.groupBox1.Location = new System.Drawing.Point(13, 13);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(200, 237);
-			this.groupBox1.TabIndex = 0;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Input devices";
+			this.groupDevices.Controls.Add(this.lblSelectedDevice);
+			this.groupDevices.Controls.Add(this.btnFindDevices);
+			this.groupDevices.Controls.Add(this.btnSelectDevice);
+			this.groupDevices.Controls.Add(this.listInputDevices);
+			this.groupDevices.Location = new System.Drawing.Point(13, 13);
+			this.groupDevices.Name = "groupDevices";
+			this.groupDevices.Size = new System.Drawing.Size(209, 237);
+			this.groupDevices.TabIndex = 0;
+			this.groupDevices.TabStop = false;
+			this.groupDevices.Text = "Output devices";
 			// 
 			// btnFindDevices
 			// 
 			this.btnFindDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnFindDevices.Location = new System.Drawing.Point(6, 208);
 			this.btnFindDevices.Name = "btnFindDevices";
-			this.btnFindDevices.Size = new System.Drawing.Size(107, 23);
+			this.btnFindDevices.Size = new System.Drawing.Size(116, 23);
 			this.btnFindDevices.TabIndex = 2;
 			this.btnFindDevices.Text = "Find devices";
 			this.btnFindDevices.UseVisualStyleBackColor = true;
+			this.btnFindDevices.Click += new System.EventHandler(this.btnFindDevices_Click);
 			// 
 			// btnSelectDevice
 			// 
 			this.btnSelectDevice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSelectDevice.Location = new System.Drawing.Point(119, 208);
+			this.btnSelectDevice.Location = new System.Drawing.Point(128, 208);
 			this.btnSelectDevice.Name = "btnSelectDevice";
 			this.btnSelectDevice.Size = new System.Drawing.Size(75, 23);
 			this.btnSelectDevice.TabIndex = 1;
 			this.btnSelectDevice.Text = "Select";
 			this.btnSelectDevice.UseVisualStyleBackColor = true;
+			this.btnSelectDevice.Click += new System.EventHandler(this.btnSelectDevice_Click);
 			// 
 			// listInputDevices
 			// 
 			this.listInputDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.listInputDevices.Location = new System.Drawing.Point(6, 20);
+			this.listInputDevices.HideSelection = false;
+			this.listInputDevices.Location = new System.Drawing.Point(6, 32);
 			this.listInputDevices.MultiSelect = false;
 			this.listInputDevices.Name = "listInputDevices";
-			this.listInputDevices.Size = new System.Drawing.Size(188, 182);
+			this.listInputDevices.Size = new System.Drawing.Size(197, 170);
 			this.listInputDevices.TabIndex = 0;
 			this.listInputDevices.UseCompatibleStateImageBehavior = false;
 			this.listInputDevices.View = System.Windows.Forms.View.List;
 			// 
-			// groupBox2
+			// groupSounds
 			// 
-			this.groupBox2.Controls.Add(this.btnRemove);
-			this.groupBox2.Controls.Add(this.listSounds);
-			this.groupBox2.Controls.Add(this.btnPlay);
-			this.groupBox2.Controls.Add(this.button1);
-			this.groupBox2.Location = new System.Drawing.Point(220, 13);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(394, 237);
-			this.groupBox2.TabIndex = 1;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Sounds";
+			this.groupSounds.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupSounds.Controls.Add(this.trackVolume);
+			this.groupSounds.Controls.Add(this.listSounds);
+			this.groupSounds.Controls.Add(this.btnPlay);
+			this.groupSounds.Controls.Add(this.btnFindWavSources);
+			this.groupSounds.Enabled = false;
+			this.groupSounds.Location = new System.Drawing.Point(228, 13);
+			this.groupSounds.Name = "groupSounds";
+			this.groupSounds.Size = new System.Drawing.Size(452, 237);
+			this.groupSounds.TabIndex = 1;
+			this.groupSounds.TabStop = false;
+			this.groupSounds.Text = "Sounds";
 			// 
-			// btnRemove
+			// trackVolume
 			// 
-			this.btnRemove.Location = new System.Drawing.Point(89, 20);
-			this.btnRemove.Name = "btnRemove";
-			this.btnRemove.Size = new System.Drawing.Size(75, 23);
-			this.btnRemove.TabIndex = 3;
-			this.btnRemove.Text = "Remove";
-			this.btnRemove.UseVisualStyleBackColor = true;
+			this.trackVolume.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.trackVolume.AutoSize = false;
+			this.trackVolume.Location = new System.Drawing.Point(267, 19);
+			this.trackVolume.Maximum = 100;
+			this.trackVolume.Name = "trackVolume";
+			this.trackVolume.Size = new System.Drawing.Size(179, 23);
+			this.trackVolume.TabIndex = 4;
+			this.trackVolume.TickFrequency = 10;
+			this.trackVolume.Value = 100;
+			this.trackVolume.Scroll += new System.EventHandler(this.trackVolume_Scroll);
 			// 
 			// listSounds
 			// 
@@ -119,23 +135,31 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listSounds.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnID,
             this.columnSoundName,
             this.columnSoundLength,
             this.columnSoundPath});
 			this.listSounds.FullRowSelect = true;
 			this.listSounds.GridLines = true;
-			this.listSounds.Location = new System.Drawing.Point(7, 50);
+			this.listSounds.HideSelection = false;
+			this.listSounds.Location = new System.Drawing.Point(6, 48);
 			this.listSounds.MultiSelect = false;
 			this.listSounds.Name = "listSounds";
-			this.listSounds.Size = new System.Drawing.Size(381, 181);
+			this.listSounds.Size = new System.Drawing.Size(440, 183);
 			this.listSounds.TabIndex = 2;
 			this.listSounds.UseCompatibleStateImageBehavior = false;
 			this.listSounds.View = System.Windows.Forms.View.Details;
+			this.listSounds.SelectedIndexChanged += new System.EventHandler(this.listSounds_SelectedIndexChanged);
+			// 
+			// columnID
+			// 
+			this.columnID.Text = "ID";
+			this.columnID.Width = 24;
 			// 
 			// columnSoundName
 			// 
 			this.columnSoundName.Text = "Name";
-			this.columnSoundName.Width = 99;
+			this.columnSoundName.Width = 117;
 			// 
 			// columnSoundLength
 			// 
@@ -144,55 +168,74 @@
 			// columnSoundPath
 			// 
 			this.columnSoundPath.Text = "Path";
-			this.columnSoundPath.Width = 212;
+			this.columnSoundPath.Width = 227;
 			// 
 			// btnPlay
 			// 
-			this.btnPlay.Location = new System.Drawing.Point(313, 20);
+			this.btnPlay.Enabled = false;
+			this.btnPlay.Location = new System.Drawing.Point(186, 19);
 			this.btnPlay.Name = "btnPlay";
 			this.btnPlay.Size = new System.Drawing.Size(75, 23);
 			this.btnPlay.TabIndex = 1;
 			this.btnPlay.Text = "Play";
 			this.btnPlay.UseVisualStyleBackColor = true;
+			this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
 			// 
-			// button1
+			// btnFindWavSources
 			// 
-			this.button1.Location = new System.Drawing.Point(7, 20);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "Add";
-			this.button1.UseVisualStyleBackColor = true;
+			this.btnFindWavSources.Location = new System.Drawing.Point(6, 19);
+			this.btnFindWavSources.Name = "btnFindWavSources";
+			this.btnFindWavSources.Size = new System.Drawing.Size(75, 23);
+			this.btnFindWavSources.TabIndex = 0;
+			this.btnFindWavSources.Text = "Find";
+			this.btnFindWavSources.UseVisualStyleBackColor = true;
+			this.btnFindWavSources.Click += new System.EventHandler(this.btnFindWavSources_Click);
+			// 
+			// lblSelectedDevice
+			// 
+			this.lblSelectedDevice.AutoSize = true;
+			this.lblSelectedDevice.Location = new System.Drawing.Point(6, 16);
+			this.lblSelectedDevice.Name = "lblSelectedDevice";
+			this.lblSelectedDevice.Size = new System.Drawing.Size(52, 13);
+			this.lblSelectedDevice.TabIndex = 3;
+			this.lblSelectedDevice.Text = "Selected:";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(626, 262);
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.groupBox1);
+			this.ClientSize = new System.Drawing.Size(692, 262);
+			this.Controls.Add(this.groupSounds);
+			this.Controls.Add(this.groupDevices);
 			this.Name = "MainForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Micspam";
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.groupDevices.ResumeLayout(false);
+			this.groupDevices.PerformLayout();
+			this.groupSounds.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.trackVolume)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox groupDevices;
 		private System.Windows.Forms.ListView listInputDevices;
 		private System.Windows.Forms.Button btnSelectDevice;
 		private System.Windows.Forms.Button btnFindDevices;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.GroupBox groupSounds;
+		private System.Windows.Forms.Button btnFindWavSources;
 		private System.Windows.Forms.Button btnPlay;
 		private System.Windows.Forms.ListView listSounds;
 		private System.Windows.Forms.ColumnHeader columnSoundName;
 		private System.Windows.Forms.ColumnHeader columnSoundLength;
 		private System.Windows.Forms.ColumnHeader columnSoundPath;
-		private System.Windows.Forms.Button btnRemove;
+		private System.Windows.Forms.TrackBar trackVolume;
+		private System.Windows.Forms.ColumnHeader columnID;
+		private System.Windows.Forms.Label lblSelectedDevice;
 	}
 }
 
