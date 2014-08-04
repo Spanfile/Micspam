@@ -49,6 +49,7 @@ namespace Micspam
 		void soundOut_Stopped(object sender, EventArgs e)
 		{
 			btnPlay.Text = "Play";
+			btnPlay.Enabled = listSounds.SelectedItems.Count > 0;
 		}
 
 		private void btnFindDevices_Click(object sender, EventArgs e)
@@ -70,7 +71,7 @@ namespace Micspam
 		private void btnSelectDevice_Click(object sender, EventArgs e)
 		{
 			device = listInputDevices.SelectedItems[0].Tag as MMDevice;
-			lblSelectedDevice.Text = "Selected: " + device.FriendlyName;
+			lblSelectedDevice.Text = "Output device: " + device.FriendlyName;
 			groupSounds.Enabled = true;
 		}
 
@@ -78,41 +79,60 @@ namespace Micspam
 		{
 			if (!Directory.Exists("sources"))
 			{
-				MessageBox.Show(this, "Couldn't find \"sources\" directory!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(this, "Couldn't find audio source directory! (sources)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
-			listSounds.Items.Clear();
+			btnFindAudioSources.Text = "Finding...";
+
+			Console.WriteLine("Finding audio sources from \"sources\"...");
+
+			List<AudioInfo> audioInfos = new List<AudioInfo>();
 
 			int index = 0;
 			string[] files = Directory.GetFiles("sources");
 			foreach (string file in files)
 			{
-				Console.WriteLine(Path.GetExtension(file));
+				//Console.WriteLine(Path.GetExtension(file));
 				if (!fileExtensions.Contains(Path.GetExtension(file)))
 					return;
 
 				string name = Path.GetFileNameWithoutExtension(file);
-				int length = 0;
+				int length = AudioLength.Get(file);
 				string path = Path.GetFullPath(file);
+				string friendlyPath = Path.Combine(Path.GetDirectoryName(file), Path.GetFileName(file));
 
-				ListViewItem item = new ListViewItem(index.ToString());
-				item.SubItems.Add(name);
-				item.SubItems.Add(length.ToString());
-				item.SubItems.Add(path);
+				AudioInfo info = new AudioInfo(index, name, length, path, friendlyPath);
+				audioInfos.Add(info);
 
-				SoundInfo info = new SoundInfo(index, name, length, path);
-				item.Tag = info;
-
-				listSounds.Items.Add(item);
+				Console.WriteLine("Found audio. ID: {0}, name: {1}, friendly path: {2}", info.ID, info.Name, info.FriendlyPath);
 
 				index += 1;
 			}
+
+			listSounds.Items.Clear();
+
+			foreach (AudioInfo info in audioInfos)
+			{
+				ListViewItem item = new ListViewItem(new string[] {
+					info.ID.ToString(),
+					info.Name,
+					TimeSpan.FromMilliseconds(info.Length).ToString("%m\\:ss"),
+					info.FriendlyPath
+				});
+				item.Tag = info;
+				listSounds.Items.Add(item);
+			}
+
+			btnFindAudioSources.Text = "Find audio sources";
 		}
 
 		private void listSounds_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			btnPlay.Enabled = listSounds.SelectedItems.Count > 0;
+			if (soundOut.PlaybackState == PlaybackState.Stopped)
+				btnPlay.Enabled = listSounds.SelectedItems.Count > 0;
+			else
+				btnPlay.Enabled = true;
 		}
 
 		private void btnPlay_Click(object sender, EventArgs e)
@@ -123,13 +143,13 @@ namespace Micspam
 
 			if (soundOut.PlaybackState == PlaybackState.Stopped)
 			{
-				SoundInfo info = listSounds.SelectedItems[0].Tag as SoundInfo;
+				AudioInfo info = listSounds.SelectedItems[0].Tag as AudioInfo;
 				Console.WriteLine("Playing sound: {0}, {1} ({2}) ({3} ms)", info.ID, info.Name, info.Path, info.Length);
 
 				soundSource = CodecFactory.Instance.GetCodec(info.Path);
 				soundOut.Device = device;
 				soundOut.Initialize(soundSource);
-				soundOut.Volume = (float)trackVolume.Value / 100f;
+				soundOut.Volume = (float)trackVolume.Value / (float)trackVolume.Maximum;
 				soundOut.Play();
 
 				btnPlay.Text = "Stop";
@@ -152,23 +172,25 @@ namespace Micspam
 
 		private void trackVolume_Scroll(object sender, EventArgs e)
 		{
-			soundOut.Volume = (float)trackVolume.Value / 100f;
+			soundOut.Volume = (float)trackVolume.Value / (float)trackVolume.Maximum;
 		}
 	}
 
-	public class SoundInfo
+	public class AudioInfo
 	{
 		public int ID { get; private set; }
 		public string Name { get; private set; }
 		public int Length { get; private set; }
 		public string Path { get; private set; }
+		public string FriendlyPath { get; private set; }
 
-		public SoundInfo(int id, string name, int length, string path)
+		public AudioInfo(int id, string name, int length, string path, string friendlyPath)
 		{
 			ID = id;
 			Name = name;
 			Length = length;
 			Path = path;
+			FriendlyPath = friendlyPath;
 		}
 	}
 }

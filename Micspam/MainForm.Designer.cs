@@ -29,19 +29,20 @@
 		private void InitializeComponent()
 		{
 			this.groupDevices = new System.Windows.Forms.GroupBox();
+			this.lblSelectedDevice = new System.Windows.Forms.Label();
 			this.btnFindDevices = new System.Windows.Forms.Button();
 			this.btnSelectDevice = new System.Windows.Forms.Button();
 			this.listInputDevices = new System.Windows.Forms.ListView();
 			this.groupSounds = new System.Windows.Forms.GroupBox();
 			this.trackVolume = new System.Windows.Forms.TrackBar();
 			this.listSounds = new System.Windows.Forms.ListView();
-			this.columnID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnSoundID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSoundName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSoundLength = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnSoundPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.btnPlay = new System.Windows.Forms.Button();
-			this.btnFindWavSources = new System.Windows.Forms.Button();
-			this.lblSelectedDevice = new System.Windows.Forms.Label();
+			this.btnFindAudioSources = new System.Windows.Forms.Button();
+			this.columnSoundType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.groupDevices.SuspendLayout();
 			this.groupSounds.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackVolume)).BeginInit();
@@ -51,7 +52,6 @@
 			// 
 			this.groupDevices.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.groupDevices.Controls.Add(this.lblSelectedDevice);
 			this.groupDevices.Controls.Add(this.btnFindDevices);
 			this.groupDevices.Controls.Add(this.btnSelectDevice);
 			this.groupDevices.Controls.Add(this.listInputDevices);
@@ -61,6 +61,15 @@
 			this.groupDevices.TabIndex = 0;
 			this.groupDevices.TabStop = false;
 			this.groupDevices.Text = "Output devices";
+			// 
+			// lblSelectedDevice
+			// 
+			this.lblSelectedDevice.AutoSize = true;
+			this.lblSelectedDevice.Location = new System.Drawing.Point(228, 13);
+			this.lblSelectedDevice.Name = "lblSelectedDevice";
+			this.lblSelectedDevice.Size = new System.Drawing.Size(77, 13);
+			this.lblSelectedDevice.TabIndex = 3;
+			this.lblSelectedDevice.Text = "Output device:";
 			// 
 			// btnFindDevices
 			// 
@@ -90,10 +99,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listInputDevices.HideSelection = false;
-			this.listInputDevices.Location = new System.Drawing.Point(6, 32);
+			this.listInputDevices.Location = new System.Drawing.Point(6, 19);
 			this.listInputDevices.MultiSelect = false;
 			this.listInputDevices.Name = "listInputDevices";
-			this.listInputDevices.Size = new System.Drawing.Size(197, 170);
+			this.listInputDevices.Size = new System.Drawing.Size(197, 183);
 			this.listInputDevices.TabIndex = 0;
 			this.listInputDevices.UseCompatibleStateImageBehavior = false;
 			this.listInputDevices.View = System.Windows.Forms.View.List;
@@ -106,19 +115,18 @@
 			this.groupSounds.Controls.Add(this.trackVolume);
 			this.groupSounds.Controls.Add(this.listSounds);
 			this.groupSounds.Controls.Add(this.btnPlay);
-			this.groupSounds.Controls.Add(this.btnFindWavSources);
+			this.groupSounds.Controls.Add(this.btnFindAudioSources);
 			this.groupSounds.Enabled = false;
-			this.groupSounds.Location = new System.Drawing.Point(228, 13);
+			this.groupSounds.Location = new System.Drawing.Point(228, 29);
 			this.groupSounds.Name = "groupSounds";
-			this.groupSounds.Size = new System.Drawing.Size(452, 237);
+			this.groupSounds.Size = new System.Drawing.Size(452, 221);
 			this.groupSounds.TabIndex = 1;
 			this.groupSounds.TabStop = false;
-			this.groupSounds.Text = "Sounds";
+			this.groupSounds.Text = "Audio sources";
 			// 
 			// trackVolume
 			// 
-			this.trackVolume.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.trackVolume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.trackVolume.AutoSize = false;
 			this.trackVolume.Location = new System.Drawing.Point(267, 19);
 			this.trackVolume.Maximum = 100;
@@ -126,6 +134,7 @@
 			this.trackVolume.Size = new System.Drawing.Size(179, 23);
 			this.trackVolume.TabIndex = 4;
 			this.trackVolume.TickFrequency = 10;
+			this.trackVolume.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackVolume.Value = 100;
 			this.trackVolume.Scroll += new System.EventHandler(this.trackVolume_Scroll);
 			// 
@@ -135,9 +144,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.listSounds.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnID,
+            this.columnSoundID,
             this.columnSoundName,
             this.columnSoundLength,
+            this.columnSoundType,
             this.columnSoundPath});
 			this.listSounds.FullRowSelect = true;
 			this.listSounds.GridLines = true;
@@ -145,16 +155,16 @@
 			this.listSounds.Location = new System.Drawing.Point(6, 48);
 			this.listSounds.MultiSelect = false;
 			this.listSounds.Name = "listSounds";
-			this.listSounds.Size = new System.Drawing.Size(440, 183);
+			this.listSounds.Size = new System.Drawing.Size(440, 167);
 			this.listSounds.TabIndex = 2;
 			this.listSounds.UseCompatibleStateImageBehavior = false;
 			this.listSounds.View = System.Windows.Forms.View.Details;
 			this.listSounds.SelectedIndexChanged += new System.EventHandler(this.listSounds_SelectedIndexChanged);
 			// 
-			// columnID
+			// columnSoundID
 			// 
-			this.columnID.Text = "ID";
-			this.columnID.Width = 24;
+			this.columnSoundID.Text = "ID";
+			this.columnSoundID.Width = 24;
 			// 
 			// columnSoundName
 			// 
@@ -164,6 +174,7 @@
 			// columnSoundLength
 			// 
 			this.columnSoundLength.Text = "Length";
+			this.columnSoundLength.Width = 47;
 			// 
 			// columnSoundPath
 			// 
@@ -172,6 +183,7 @@
 			// 
 			// btnPlay
 			// 
+			this.btnPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPlay.Enabled = false;
 			this.btnPlay.Location = new System.Drawing.Point(186, 19);
 			this.btnPlay.Name = "btnPlay";
@@ -181,30 +193,27 @@
 			this.btnPlay.UseVisualStyleBackColor = true;
 			this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
 			// 
-			// btnFindWavSources
+			// btnFindAudioSources
 			// 
-			this.btnFindWavSources.Location = new System.Drawing.Point(6, 19);
-			this.btnFindWavSources.Name = "btnFindWavSources";
-			this.btnFindWavSources.Size = new System.Drawing.Size(75, 23);
-			this.btnFindWavSources.TabIndex = 0;
-			this.btnFindWavSources.Text = "Find";
-			this.btnFindWavSources.UseVisualStyleBackColor = true;
-			this.btnFindWavSources.Click += new System.EventHandler(this.btnFindWavSources_Click);
+			this.btnFindAudioSources.Location = new System.Drawing.Point(6, 19);
+			this.btnFindAudioSources.Name = "btnFindAudioSources";
+			this.btnFindAudioSources.Size = new System.Drawing.Size(144, 23);
+			this.btnFindAudioSources.TabIndex = 0;
+			this.btnFindAudioSources.Text = "Find audio sources";
+			this.btnFindAudioSources.UseVisualStyleBackColor = true;
+			this.btnFindAudioSources.Click += new System.EventHandler(this.btnFindWavSources_Click);
 			// 
-			// lblSelectedDevice
+			// columnSoundType
 			// 
-			this.lblSelectedDevice.AutoSize = true;
-			this.lblSelectedDevice.Location = new System.Drawing.Point(6, 16);
-			this.lblSelectedDevice.Name = "lblSelectedDevice";
-			this.lblSelectedDevice.Size = new System.Drawing.Size(52, 13);
-			this.lblSelectedDevice.TabIndex = 3;
-			this.lblSelectedDevice.Text = "Selected:";
+			this.columnSoundType.Text = "Type";
+			this.columnSoundType.Width = 45;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(692, 262);
+			this.Controls.Add(this.lblSelectedDevice);
 			this.Controls.Add(this.groupSounds);
 			this.Controls.Add(this.groupDevices);
 			this.Name = "MainForm";
@@ -213,10 +222,10 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.groupDevices.ResumeLayout(false);
-			this.groupDevices.PerformLayout();
 			this.groupSounds.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.trackVolume)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -227,15 +236,16 @@
 		private System.Windows.Forms.Button btnSelectDevice;
 		private System.Windows.Forms.Button btnFindDevices;
 		private System.Windows.Forms.GroupBox groupSounds;
-		private System.Windows.Forms.Button btnFindWavSources;
+		private System.Windows.Forms.Button btnFindAudioSources;
 		private System.Windows.Forms.Button btnPlay;
 		private System.Windows.Forms.ListView listSounds;
 		private System.Windows.Forms.ColumnHeader columnSoundName;
 		private System.Windows.Forms.ColumnHeader columnSoundLength;
 		private System.Windows.Forms.ColumnHeader columnSoundPath;
 		private System.Windows.Forms.TrackBar trackVolume;
-		private System.Windows.Forms.ColumnHeader columnID;
+		private System.Windows.Forms.ColumnHeader columnSoundID;
 		private System.Windows.Forms.Label lblSelectedDevice;
+		private System.Windows.Forms.ColumnHeader columnSoundType;
 	}
 }
 
