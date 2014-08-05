@@ -112,11 +112,12 @@ namespace Micspam
 
 				info.Stopped += (s, e) =>
 				{
-					if (listAudios.SelectedItems[0] == item)
-					{
-						btnPlayAudio.Text = "Play";
-						listAudios.SelectedItems[0].ImageIndex = 1;
-					}
+					ListViewItem infoItem = listAudios.Items.Cast<ListViewItem>().Where(i => (i.Tag as AudioInfo).Equals(info)).FirstOrDefault();
+					infoItem.ImageIndex = 1;
+
+					if (listAudios.SelectedItems.Count > 0)
+						if (infoItem.Equals(listAudios.SelectedItems[0]))
+							btnPlayAudio.Text = "Play";
 				};
 
 				item.Tag = info;
