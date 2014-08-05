@@ -214,6 +214,8 @@ namespace Micspam
 			listAudios.SelectedItems[0].ImageIndex = info.Playing ? 0 : 1;
 			//Console.WriteLine((listAudios.SelectedItems[0].Tag as AudioInfo).Playing);
 
+			trackAudioVolume.Value = (int)(info.volume * 100);
+
 			listAudioOutputDevices.Items.Clear();
 			foreach (MMDevice device in devices)
 			{
@@ -268,12 +270,12 @@ namespace Micspam
 			}
 		}
 
-		private void trackAudioVolume_Scroll(object sender, EventArgs e)
+		private void trackAudioVolume_ValueChanged(object sender, EventArgs e)
 		{
 			UpdateAudioVolume();
 		}
 
-		private void trackGlobalVolume_Scroll(object sender, EventArgs e)
+		private void trackGlobalVolume_ValueChanged(object sender, EventArgs e)
 		{
 			UpdateGlobalVolume();
 		}
