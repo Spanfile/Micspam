@@ -130,6 +130,8 @@ namespace Micspam
 
 		private void PlayAudio(AudioInfo info)
 		{
+			UpdateGlobalVolume();
+			info.SetVolume(UpdateAudioVolume());
 			info.Play();
 		}
 

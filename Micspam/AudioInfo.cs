@@ -71,7 +71,7 @@ namespace Micspam
 		public async void Play()
 		{
 			MMDevice[] playDevices = GetEnabledDevices();
-			Console.WriteLine("Playing \"{0}\" on devices: {1}", name, String.Join<string>(", ", playDevices.Select(d => d.FriendlyName)));
+			Console.WriteLine("Playing \"{0}\" with volume {1:0.00} on devices: {2}", name, volume, String.Join<string>(", ", playDevices.Select(d => d.FriendlyName)));
 
 			List<ManualResetEvent> mres = new List<ManualResetEvent>();
 
