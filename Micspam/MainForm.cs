@@ -88,7 +88,7 @@ namespace Micspam
 				string source = file;
 				string fullPath = Path.GetFullPath(file);
 				string type = extensionNames[extension];
-				int length = AudioLength.Get(fullPath);
+				TimeSpan length = AudioLength.Get(fullPath);
 
 				AudioInfo info = new AudioInfo(index, name, fullPath, source, type, length);
 				info.PopulateDevices(devices.ToArray());
@@ -105,7 +105,7 @@ namespace Micspam
 				ListViewItem item = new ListViewItem(new string[] {
 					"",
 					info.name,
-					TimeSpan.FromMilliseconds(info.length).ToString("%m\\:ss"),
+					info.length.ToString("%m\\:ss"),
 					info.type,
 					info.source
 				});

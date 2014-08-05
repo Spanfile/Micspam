@@ -19,7 +19,7 @@ namespace Micspam
 		public string source;
 		public string friendlySource;
 		public string type;
-		public int length;
+		public TimeSpan length;
 		public float volume;
 
 		List<Tuple<WasapiOut, IWaveSource>> audioOuts;
@@ -35,7 +35,7 @@ namespace Micspam
 			}
 		}
 
-		public AudioInfo(int index, string name, string source, string friendlySource, string type, int length)
+		public AudioInfo(int index, string name, string source, string friendlySource, string type, TimeSpan length)
 		{
 			this.index = index;
 			this.name = name;
