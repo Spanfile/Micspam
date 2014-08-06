@@ -73,7 +73,7 @@ namespace Micspam
 		public async void Play()
 		{
 			MMDevice[] playDevices = GetEnabledDevices();
-			Console.WriteLine("Playing \"{0}\" with volume {1:0.00} on devices: {2}", name, volume, String.Join<string>(", ", playDevices.Select(d => d.FriendlyName)));
+			Console.WriteLine("Playing \"{0}\" with volume {1:0.00} on devices: {2}", name, GetVolume(), String.Join<string>(", ", playDevices.Select(d => d.FriendlyName)));
 
 			List<ManualResetEvent> mres = new List<ManualResetEvent>();
 
@@ -81,10 +81,11 @@ namespace Micspam
 			{
 				WasapiOut audioOut = new WasapiOut();
 				IWaveSource source = CodecFactory.Instance.GetCodec(this.source);
+				Console.WriteLine("Source format: {0}", source.WaveFormat.ToString());
 
 				audioOut.Device = device;
 				audioOut.Initialize(source);
-				audioOut.Volume = volume;
+				audioOut.Volume = GetVolume();
 
 				ManualResetEvent mre = new ManualResetEvent(false);
 				mres.Add(mre);
@@ -138,7 +139,12 @@ namespace Micspam
 		{
 			if (Playing)
 				foreach (var audioOut in audioOuts)
-					audioOut.Item1.Volume = volume * masterVolume;
+					audioOut.Item1.Volume = GetVolume();
+		}
+
+		private float GetVolume()
+		{
+			return volume * masterVolume;
 		}
 	}
 }

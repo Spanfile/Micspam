@@ -94,7 +94,7 @@ namespace Micspam
 				info.PopulateDevices(devices.ToArray());
 				infos.Add(info);
 
-				Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3}ms)", index, name, type, length);
+				Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3})", index, name, type, length.ToString("%m\\:ss"));
 
 				index += 1;
 			}
@@ -130,7 +130,7 @@ namespace Micspam
 
 		private void PlayAudio(AudioInfo info)
 		{
-			UpdateGlobalVolume();
+			info.SetMasterVolume(UpdateGlobalVolume());
 			info.SetVolume(UpdateAudioVolume());
 			info.Play();
 		}
@@ -140,7 +140,7 @@ namespace Micspam
 			float volume = (float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum;
 			lblGlobalVolumeValue.Text = String.Format("({0:0.00})", volume);
 
-			foreach (AudioInfo info in GetPlayingAudios())
+			foreach (AudioInfo info in GetAudioInfos())
 				info.SetMasterVolume(volume);
 
 			UpdateAudioVolume();
@@ -162,8 +162,12 @@ namespace Micspam
 
 		private List<AudioInfo> GetPlayingAudios()
 		{
-			// DAT LINQ
-			return listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).Where(i => i.Playing).ToList();
+			return GetAudioInfos().Where(i => i.Playing).ToList();
+		}
+
+		private List<AudioInfo> GetAudioInfos()
+		{
+			return listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).ToList();
 		}
 
 		private ListViewItem GetListItemOf(AudioInfo info)
@@ -265,7 +269,7 @@ namespace Micspam
 		{
 			AudioInfo info = listAudios.SelectedItems[0].Tag as AudioInfo;
 			if (!info.Playing)
-				info.Play();
+				PlayAudio(info);
 			else
 				info.Stop();
 
