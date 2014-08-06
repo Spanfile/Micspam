@@ -112,12 +112,12 @@ namespace Micspam
 
 				info.Stopped += (s, e) =>
 				{
-					ListViewItem infoItem = listAudios.Items.Cast<ListViewItem>().Where(i => (i.Tag as AudioInfo).Equals(info)).FirstOrDefault();
+					ListViewItem infoItem = GetListItemOf(info);
 					infoItem.ImageIndex = 1;
 
 					if (listAudios.SelectedItems.Count > 0)
 						if (infoItem.Equals(listAudios.SelectedItems[0]))
-							btnPlayAudio.Text = "Play";
+							UpdateAudioSettingsPanel(info);
 				};
 
 				item.Tag = info;
@@ -166,10 +166,22 @@ namespace Micspam
 			return listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).Where(i => i.Playing).ToList();
 		}
 
+		private ListViewItem GetListItemOf(AudioInfo info)
+		{
+			return listAudios.Items.Cast<ListViewItem>().Where(i => (i.Tag as AudioInfo).Equals(info)).FirstOrDefault();
+		}
+
 		private void StopAllAudios()
 		{
 			foreach (AudioInfo info in GetPlayingAudios())
 				info.Stop();
+		}
+
+		private void UpdateAudioSettingsPanel(AudioInfo info)
+		{
+			btnPlayAudio.Text = info.Playing ? "Stop" : "Play";
+			GetListItemOf(info).ImageIndex = info.Playing ? 0 : 1;
+			listAudioOutputDevices.Enabled = !info.Playing;
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -217,8 +229,7 @@ namespace Micspam
 			groupAudioSettings.Enabled = true;
 			groupAudioSettings.Text = info.name;
 
-			btnPlayAudio.Text = info.Playing ? "Stop" : "Play";
-			listAudios.SelectedItems[0].ImageIndex = info.Playing ? 0 : 1;
+			UpdateAudioSettingsPanel(info);
 			//Console.WriteLine((listAudios.SelectedItems[0].Tag as AudioInfo).Playing);
 
 			trackAudioVolume.Value = (int)(info.volume * 100);
@@ -254,17 +265,11 @@ namespace Micspam
 		{
 			AudioInfo info = listAudios.SelectedItems[0].Tag as AudioInfo;
 			if (!info.Playing)
-			{
-				PlayAudio(info);
-				btnPlayAudio.Text = "Stop";
-				listAudios.SelectedItems[0].ImageIndex = 0;
-			}
+				info.Play();
 			else
-			{
 				info.Stop();
-				btnPlayAudio.Text = "Play";
-				listAudios.SelectedItems[0].ImageIndex = 1;
-			}
+
+			UpdateAudioSettingsPanel(info);
 		}
 
 		private void listAudioOutputDevices_ItemChecked(object sender, ItemCheckedEventArgs e)
