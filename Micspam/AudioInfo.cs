@@ -21,6 +21,7 @@ namespace Micspam
 		public string type;
 		public TimeSpan length;
 		public float volume;
+		public float masterVolume;
 
 		List<Tuple<WasapiOut, IWaveSource>> audioOuts;
 		Dictionary<MMDevice, bool> devices;
@@ -45,6 +46,7 @@ namespace Micspam
 			this.length = length;
 
 			this.volume = 1;
+			this.masterVolume = 1;
 
 			audioOuts = new List<Tuple<WasapiOut, IWaveSource>>();
 		}
@@ -123,10 +125,20 @@ namespace Micspam
 		public void SetVolume(float volume)
 		{
 			this.volume = volume;
+			UpdateVolume();
+		}
 
+		public void SetMasterVolume(float volume)
+		{
+			this.masterVolume = volume;
+			UpdateVolume();
+		}
+
+		private void UpdateVolume()
+		{
 			if (Playing)
 				foreach (var audioOut in audioOuts)
-					audioOut.Item1.Volume = volume;
+					audioOut.Item1.Volume = volume * masterVolume;
 		}
 	}
 }

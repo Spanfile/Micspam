@@ -12,7 +12,6 @@ namespace Micspam
 {
 	public static class AudioLength
 	{
-
 		public static TimeSpan Get(string filename)
 		{
 			IWaveSource source = CodecFactory.Instance.GetCodec(filename);

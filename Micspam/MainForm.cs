@@ -135,15 +135,15 @@ namespace Micspam
 			info.Play();
 		}
 
-		private float ModifyVolume(float volume)
-		{
-			return volume * ((float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum);
-		}
-
 		private float UpdateGlobalVolume()
 		{
 			float volume = (float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum;
 			lblGlobalVolumeValue.Text = String.Format("({0:0.00})", volume);
+
+			// DAT LINQ
+			List<AudioInfo> playingAudios = listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).Where(i => i.Playing).ToList();
+			foreach (AudioInfo info in playingAudios)
+				info.SetMasterVolume(volume);
 
 			UpdateAudioVolume();
 
@@ -153,11 +153,11 @@ namespace Micspam
 		private float UpdateAudioVolume()
 		{
 			float volume = (float)trackAudioVolume.Value / (float)trackAudioVolume.Maximum;
-			float modified = ModifyVolume(volume);
+			float modified = volume * ((float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum);
 			lblAudioVolumeValue.Text = String.Format("({0:0.00}, {1:0.00})", volume, modified);
 
 			if (listAudios.SelectedItems.Count > 0)
-				(listAudios.SelectedItems[0].Tag as AudioInfo).SetVolume(modified);
+				(listAudios.SelectedItems[0].Tag as AudioInfo).SetVolume(volume);
 
 			return volume;
 		}
