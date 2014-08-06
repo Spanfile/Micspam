@@ -20,9 +20,12 @@ namespace Micspam
 	public partial class MainForm : Form
 	{
 		string audioSourceDir = "sources";
+		bool searchChildren = true;
 
 		List<string> acceptedExtensions;
 		Dictionary<string, string> extensionNames;
+
+		List<AudioInfo> audioInfos;
 
 		List<DeviceInfo> deviceInfos;
 		MMDevice defaultDevice;
@@ -72,12 +75,11 @@ namespace Micspam
 
 			lblAudioSourceDir.Text = Path.GetFullPath(audioSourceDir);
 
-			List<AudioInfo> infos = new List<AudioInfo>();
-			string[] files = Directory.GetFiles(audioSourceDir);
+			string[] files = Directory.GetFiles(audioSourceDir, "*.*", searchChildren ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
 			if (!files.Any())
 			{
-				Console.WriteLine("Directory is empty");
+				Console.WriteLine("Couldn't find any files");
 				return;
 			}
 
@@ -99,16 +101,7 @@ namespace Micspam
 
 				AudioInfo info = new AudioInfo(index, name, fullPath, source, type, length);
 				info.PopulateDevices(GetDevices().ToArray());
-				infos.Add(info);
 
-				Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3})", index, name, type, length.ToString("%m\\:ss"));
-
-				index += 1;
-			}
-
-			listAudios.Items.Clear();
-			foreach (AudioInfo info in infos)
-			{
 				ListViewItem item = new ListViewItem(new string[] {
 					"",
 					info.name,
@@ -117,22 +110,48 @@ namespace Micspam
 					info.source
 				});
 
+				info.listItem = item;
 				info.Stopped += (s, e) =>
 				{
-					ListViewItem infoItem = GetListItemOf(info);
+					ListViewItem infoItem = info.listItem;
+					if (infoItem == null)
+					{
+						Console.WriteLine("Something went wrong; the list item tied to the audio isn't there!");
+						return;
+					}
+
 					infoItem.ImageIndex = 1;
+					UpdateSettings();
 
 					if (listAudios.SelectedItems.Count > 0)
 						if (infoItem.Equals(listAudios.SelectedItems[0]))
 							UpdateAudioSettingsPanel(info);
 				};
 
-				item.Tag = info;
+				audioInfos.Add(info);
 
-				listAudios.Items.Add(item);
+				Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3})", index, name, type, length.ToString("%m\\:ss"));
+
+				index += 1;
 			}
 
+			FilterAudioList("");
+
 			Console.WriteLine("Done");
+		}
+
+		private void FilterAudioList(string filter)
+		{
+			// if filter is "", all items will be added
+
+			listAudios.Items.Clear();
+
+			Wildcard wildcard = new Wildcard(filter);
+			foreach (AudioInfo info in audioInfos)
+			{
+				if (wildcard.IsMatch(info.name) || filter == "")
+					listAudios.Items.Add(info.listItem);
+			}
 		}
 
 		private void PlayAudio(AudioInfo info)
@@ -147,7 +166,7 @@ namespace Micspam
 			float volume = (float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum;
 			lblGlobalVolumeValue.Text = String.Format("({0:0.00})", volume);
 
-			foreach (AudioInfo info in GetAudioInfos())
+			foreach (AudioInfo info in audioInfos)
 				info.SetMasterVolume(volume);
 
 			UpdateAudioVolume();
@@ -162,24 +181,14 @@ namespace Micspam
 			lblAudioVolumeValue.Text = String.Format("({0:0.00}, {1:0.00})", volume, modified);
 
 			if (listAudios.SelectedItems.Count > 0)
-				(listAudios.SelectedItems[0].Tag as AudioInfo).SetVolume(volume);
+				GetAudioInfoOf(listAudios.SelectedItems[0]).SetVolume(volume);
 
 			return volume;
 		}
 
 		private List<AudioInfo> GetPlayingAudios()
 		{
-			return GetAudioInfos().Where(i => i.Playing).ToList();
-		}
-
-		private List<AudioInfo> GetAudioInfos()
-		{
-			return listAudios.GetItems().Select(i => i.Tag as AudioInfo).ToList();
-		}
-
-		private ListViewItem GetListItemOf(AudioInfo info)
-		{
-			return listAudios.GetItems().Where(i => (i.Tag as AudioInfo).Equals(info)).FirstOrDefault();
+			return audioInfos.Where(i => i.Playing).ToList();
 		}
 
 		private void StopAllAudios()
@@ -191,8 +200,15 @@ namespace Micspam
 		private void UpdateAudioSettingsPanel(AudioInfo info)
 		{
 			btnPlayAudio.Text = info.Playing ? "Stop" : "Play";
-			GetListItemOf(info).ImageIndex = info.Playing ? 0 : 1;
+			info.listItem.ImageIndex = info.Playing ? 0 : 1;
 			listAudioOutputDevices.Enabled = !info.Playing;
+
+			UpdateSettings();
+		}
+
+		private void UpdateSettings()
+		{
+			menuSettingsChangeSourceDir.Enabled = !GetPlayingAudios().Any();
 		}
 
 		private List<MMDevice> GetDevices()
@@ -211,8 +227,15 @@ namespace Micspam
 				Console.WriteLine("\"{0}\": {1}", info.device.FriendlyName, info.enabled);
 		}
 
+		private AudioInfo GetAudioInfoOf(ListViewItem item)
+		{
+			return audioInfos.Where(i => i.listItem.Equals(item)).FirstOrDefault();
+		}
+
 		private void MainForm_Load(object sender, EventArgs e)
 		{
+			audioInfos = new List<AudioInfo>();
+
 			acceptedExtensions = new List<string>();
 			acceptedExtensions.Add(".wav");
 			acceptedExtensions.Add(".mp3");
@@ -249,7 +272,7 @@ namespace Micspam
 				return;
 			}
 
-			AudioInfo info = listAudios.SelectedItems[0].Tag as AudioInfo;
+			AudioInfo info = GetAudioInfoOf(listAudios.SelectedItems[0]);
 
 			groupAudioSettings.Enabled = true;
 			groupAudioSettings.Text = info.name;
@@ -288,7 +311,7 @@ namespace Micspam
 
 		private void btnPlayAudio_Click(object sender, EventArgs e)
 		{
-			AudioInfo info = listAudios.SelectedItems[0].Tag as AudioInfo;
+			AudioInfo info = GetAudioInfoOf(listAudios.SelectedItems[0]);
 			if (!info.Playing)
 				PlayAudio(info);
 			else
@@ -299,7 +322,7 @@ namespace Micspam
 
 		private void listAudioOutputDevices_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			AudioInfo info = listAudios.SelectedItems[0].Tag as AudioInfo;
+			AudioInfo info = GetAudioInfoOf(listAudios.SelectedItems[0]);
 			foreach (ListViewItem item in listAudioOutputDevices.Items)
 			{
 				MMDevice device = item.Tag as MMDevice;
@@ -320,6 +343,7 @@ namespace Micspam
 		private void btnStopAllAudios_Click(object sender, EventArgs e)
 		{
 			StopAllAudios();
+			UpdateSettings();
 		}
 
 		private void menuViewOutputDevices_Click(object sender, EventArgs e)
@@ -346,6 +370,16 @@ namespace Micspam
 				audioSourceDir = fbd.SelectedPath;
 				RefreshAudioList();
 			}
+		}
+
+		private void menuSettingsFindFromChildren_Click(object sender, EventArgs e)
+		{
+			searchChildren = menuSettingsChangeSourceDir.Checked;
+		}
+
+		private void textAudioFilter_TextChanged(object sender, EventArgs e)
+		{
+			FilterAudioList(textAudioFilter.Text);
 		}
 	}
 }

@@ -49,6 +49,9 @@
 			this.menuView = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewOutputDevices = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewAudioDir = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsChangeSourceDir = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsFindFromChildren = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnRefreshAudioList = new System.Windows.Forms.Button();
 			this.trackGlobalVolume = new System.Windows.Forms.TrackBar();
 			this.label2 = new System.Windows.Forms.Label();
@@ -56,8 +59,8 @@
 			this.lblAudioSourceDir = new System.Windows.Forms.Label();
 			this.lblGlobalVolumeValue = new System.Windows.Forms.Label();
 			this.btnStopAllAudios = new System.Windows.Forms.Button();
-			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuSettingsChangeSourceDir = new System.Windows.Forms.ToolStripMenuItem();
+			this.textAudioFilter = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.groupAudioSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackAudioVolume)).BeginInit();
 			this.menuMain.SuspendLayout();
@@ -85,8 +88,9 @@
 			this.listAudios.Location = new System.Drawing.Point(0, 53);
 			this.listAudios.MultiSelect = false;
 			this.listAudios.Name = "listAudios";
-			this.listAudios.Size = new System.Drawing.Size(476, 274);
+			this.listAudios.Size = new System.Drawing.Size(476, 245);
 			this.listAudios.SmallImageList = this.imglistAudios;
+			this.listAudios.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.listAudios.TabIndex = 0;
 			this.listAudios.UseCompatibleStateImageBehavior = false;
 			this.listAudios.View = System.Windows.Forms.View.Details;
@@ -257,6 +261,32 @@
 			this.menuViewAudioDir.Text = "Audio source directory";
 			this.menuViewAudioDir.Click += new System.EventHandler(this.menuViewAudioDir_Click);
 			// 
+			// menuSettings
+			// 
+			this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsChangeSourceDir,
+            this.menuSettingsFindFromChildren});
+			this.menuSettings.Name = "menuSettings";
+			this.menuSettings.Size = new System.Drawing.Size(61, 20);
+			this.menuSettings.Text = "Settings";
+			// 
+			// menuSettingsChangeSourceDir
+			// 
+			this.menuSettingsChangeSourceDir.Name = "menuSettingsChangeSourceDir";
+			this.menuSettingsChangeSourceDir.Size = new System.Drawing.Size(251, 22);
+			this.menuSettingsChangeSourceDir.Text = "Change source directory";
+			this.menuSettingsChangeSourceDir.Click += new System.EventHandler(this.menuSettingsChangeSourceDir_Click);
+			// 
+			// menuSettingsFindFromChildren
+			// 
+			this.menuSettingsFindFromChildren.Checked = true;
+			this.menuSettingsFindFromChildren.CheckOnClick = true;
+			this.menuSettingsFindFromChildren.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.menuSettingsFindFromChildren.Name = "menuSettingsFindFromChildren";
+			this.menuSettingsFindFromChildren.Size = new System.Drawing.Size(251, 22);
+			this.menuSettingsFindFromChildren.Text = "Find sounds from source children";
+			this.menuSettingsFindFromChildren.Click += new System.EventHandler(this.menuSettingsFindFromChildren_Click);
+			// 
 			// btnRefreshAudioList
 			// 
 			this.btnRefreshAudioList.Location = new System.Drawing.Point(0, 0);
@@ -300,6 +330,8 @@
 			// 
 			// splitMain.Panel1
 			// 
+			this.splitMain.Panel1.Controls.Add(this.label4);
+			this.splitMain.Panel1.Controls.Add(this.textAudioFilter);
 			this.splitMain.Panel1.Controls.Add(this.lblAudioSourceDir);
 			this.splitMain.Panel1.Controls.Add(this.lblGlobalVolumeValue);
 			this.splitMain.Panel1.Controls.Add(this.btnRefreshAudioList);
@@ -347,20 +379,25 @@
 			this.btnStopAllAudios.UseVisualStyleBackColor = true;
 			this.btnStopAllAudios.Click += new System.EventHandler(this.btnStopAllAudios_Click);
 			// 
-			// menuSettings
+			// textAudioFilter
 			// 
-			this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSettingsChangeSourceDir});
-			this.menuSettings.Name = "menuSettings";
-			this.menuSettings.Size = new System.Drawing.Size(61, 20);
-			this.menuSettings.Text = "Settings";
+			this.textAudioFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textAudioFilter.Location = new System.Drawing.Point(38, 304);
+			this.textAudioFilter.Name = "textAudioFilter";
+			this.textAudioFilter.Size = new System.Drawing.Size(438, 20);
+			this.textAudioFilter.TabIndex = 8;
+			this.textAudioFilter.TextChanged += new System.EventHandler(this.textAudioFilter_TextChanged);
 			// 
-			// menuSettingsChangeSourceDir
+			// label4
 			// 
-			this.menuSettingsChangeSourceDir.Name = "menuSettingsChangeSourceDir";
-			this.menuSettingsChangeSourceDir.Size = new System.Drawing.Size(203, 22);
-			this.menuSettingsChangeSourceDir.Text = "Change source directory";
-			this.menuSettingsChangeSourceDir.Click += new System.EventHandler(this.menuSettingsChangeSourceDir_Click);
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(3, 307);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(29, 13);
+			this.label4.TabIndex = 9;
+			this.label4.Text = "Filter";
 			// 
 			// MainForm
 			// 
@@ -422,6 +459,9 @@
 		private System.Windows.Forms.Button btnStopAllAudios;
 		private System.Windows.Forms.ToolStripMenuItem menuSettings;
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeSourceDir;
+		private System.Windows.Forms.ToolStripMenuItem menuSettingsFindFromChildren;
+		private System.Windows.Forms.TextBox textAudioFilter;
+		private System.Windows.Forms.Label label4;
 
 	}
 }

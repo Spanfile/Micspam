@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows.Forms;
 
 using CSCore.SoundOut;
 using CSCore.CoreAudioAPI;
@@ -14,6 +15,8 @@ namespace Micspam
 {
 	public class AudioInfo
 	{
+		public ListViewItem listItem;
+
 		public int index;
 		public string name;
 		public string source;
