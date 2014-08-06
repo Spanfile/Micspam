@@ -46,7 +46,12 @@ namespace Micspam
 				{
 					foreach (MMDevice device in deviceCollection)
 					{
-						deviceInfos.Add(new DeviceInfo(device));
+						DeviceInfo info = new DeviceInfo(device);
+
+						if (device.FriendlyName == defaultDevice.FriendlyName)
+							info.isDefault = true;
+
+						deviceInfos.Add(info);
 						Console.WriteLine("Adding \"{0}\"", device.FriendlyName);
 					}
 				}

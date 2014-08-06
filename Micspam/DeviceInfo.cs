@@ -16,6 +16,7 @@ namespace Micspam
 		public MMDevice device;
 
 		public bool enabled = true;
+		public bool isDefault = false;
 
 		public DeviceInfo(MMDevice device)
 		{

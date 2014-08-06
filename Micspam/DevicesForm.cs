@@ -54,6 +54,15 @@ namespace Micspam
 			}
 
 			groupDeviceSettings.Enabled = true;
+			checkDeviceEnabled.Enabled = true;
+			lblDefaultDevice.Visible = false;
+
+			if (selectedItems.Count == 1)
+				if ((selectedItems[0].Tag as DeviceInfo).isDefault)
+				{
+					checkDeviceEnabled.Enabled = false;
+					lblDefaultDevice.Visible = true;
+				}
 
 			if (selectedItems.Select(i => i.Tag as DeviceInfo).All(d => d.enabled))
 				checkDeviceEnabled.CheckState = CheckState.Checked;
@@ -71,7 +80,11 @@ namespace Micspam
 			{
 				DeviceInfo info = item.Tag as DeviceInfo;
 
-				info.enabled = checkDeviceEnabled.Checked;
+				if (info.isDefault)
+					info.enabled = true;
+				else
+					info.enabled = checkDeviceEnabled.Checked;
+
 				item.SubItems[1].Text = GetBoolFriendlyName(info.enabled);
 
 				Console.WriteLine("\"{0}\" status set to {1}", info.device.FriendlyName, info.enabled);

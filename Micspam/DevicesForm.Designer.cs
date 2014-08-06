@@ -36,6 +36,7 @@
 			this.checkDeviceEnabled = new System.Windows.Forms.CheckBox();
 			this.columnDeviceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnDeviceEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lblDefaultDevice = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
 			this.splitMain.Panel1.SuspendLayout();
 			this.splitMain.Panel2.SuspendLayout();
@@ -81,6 +82,7 @@
 			// 
 			// groupDeviceSettings
 			// 
+			this.groupDeviceSettings.Controls.Add(this.lblDefaultDevice);
 			this.groupDeviceSettings.Controls.Add(this.checkDeviceEnabled);
 			this.groupDeviceSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupDeviceSettings.Enabled = false;
@@ -133,6 +135,17 @@
 			// 
 			this.columnDeviceEnabled.Text = "Enabled";
 			// 
+			// lblDefaultDevice
+			// 
+			this.lblDefaultDevice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDefaultDevice.Location = new System.Drawing.Point(7, 44);
+			this.lblDefaultDevice.Name = "lblDefaultDevice";
+			this.lblDefaultDevice.Size = new System.Drawing.Size(163, 30);
+			this.lblDefaultDevice.TabIndex = 1;
+			this.lblDefaultDevice.Text = "This is the default device. It cannot be disabled.\r\n";
+			this.lblDefaultDevice.Visible = false;
+			// 
 			// DevicesForm
 			// 
 			this.AcceptButton = this.btnOK;
@@ -166,5 +179,6 @@
 		private System.Windows.Forms.CheckBox checkDeviceEnabled;
 		private System.Windows.Forms.ColumnHeader columnDeviceName;
 		private System.Windows.Forms.ColumnHeader columnDeviceEnabled;
+		private System.Windows.Forms.Label lblDefaultDevice;
 	}
 }
