@@ -140,9 +140,7 @@ namespace Micspam
 			float volume = (float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum;
 			lblGlobalVolumeValue.Text = String.Format("({0:0.00})", volume);
 
-			// DAT LINQ
-			List<AudioInfo> playingAudios = listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).Where(i => i.Playing).ToList();
-			foreach (AudioInfo info in playingAudios)
+			foreach (AudioInfo info in GetPlayingAudios())
 				info.SetMasterVolume(volume);
 
 			UpdateAudioVolume();
@@ -160,6 +158,18 @@ namespace Micspam
 				(listAudios.SelectedItems[0].Tag as AudioInfo).SetVolume(volume);
 
 			return volume;
+		}
+
+		private List<AudioInfo> GetPlayingAudios()
+		{
+			// DAT LINQ
+			return listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).Where(i => i.Playing).ToList();
+		}
+
+		private void StopAllAudios()
+		{
+			foreach (AudioInfo info in GetPlayingAudios())
+				info.Stop();
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -185,10 +195,7 @@ namespace Micspam
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			// DAT LINQ
-			List<AudioInfo> playingAudios = listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).Where(i => i.Playing).ToList();
-			foreach (AudioInfo info in playingAudios)
-				info.Stop();
+			StopAllAudios();
 		}
 
 		private void btnRefreshAudioList_Click(object sender, EventArgs e)
@@ -278,6 +285,11 @@ namespace Micspam
 		private void trackGlobalVolume_ValueChanged(object sender, EventArgs e)
 		{
 			UpdateGlobalVolume();
+		}
+
+		private void btnStopAllAudios_Click(object sender, EventArgs e)
+		{
+			StopAllAudios();
 		}
 	}
 }
