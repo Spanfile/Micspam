@@ -70,6 +70,8 @@ namespace Micspam
 
 			Console.WriteLine("Refreshing audio list from \"{0}\"", audioSourceDir);
 
+			lblAudioSourceDir.Text = Path.GetFullPath(audioSourceDir);
+
 			List<AudioInfo> infos = new List<AudioInfo>();
 			string[] files = Directory.GetFiles(audioSourceDir);
 
@@ -211,8 +213,6 @@ namespace Micspam
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			lblAudioSourceDir.Text = Path.GetFileName(audioSourceDir);
-
 			acceptedExtensions = new List<string>();
 			acceptedExtensions.Add(".wav");
 			acceptedExtensions.Add(".mp3");
@@ -332,6 +332,19 @@ namespace Micspam
 				deviceInfos = form.GetDeviceList();
 				Console.WriteLine("Device list updated");
 				PrintDeviceList();
+			}
+		}
+
+		private void menuSettingsChangeSourceDir_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog fbd = new FolderBrowserDialog();
+			fbd.Description = "Select the folder from where the program will load sounds";
+			fbd.ShowNewFolderButton = true;
+
+			if (fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+			{
+				audioSourceDir = fbd.SelectedPath;
+				RefreshAudioList();
 			}
 		}
 	}
