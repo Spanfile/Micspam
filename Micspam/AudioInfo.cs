@@ -54,12 +54,12 @@ namespace Micspam
 			audioOuts = new List<Tuple<WasapiOut, IWaveSource>>();
 		}
 
-		public void PopulateDevices(MMDevice[] deviceList)
+		public void PopulateDevices(DeviceInfo[] deviceList)
 		{
 			devices = new Dictionary<MMDevice, bool>();
 
-			foreach (MMDevice device in deviceList)
-				devices.Add(device, false);
+			foreach (DeviceInfo info in deviceList)
+				devices.Add(info.device, info.isDefault);
 		}
 
 		public MMDevice[] GetEnabledDevices()
@@ -71,6 +71,11 @@ namespace Micspam
 		{
 			devices[device] = status;
 			//Console.WriteLine("Audio \"{0}\" device \"{1}\" status: {2}", name, device.FriendlyName, status);
+		}
+
+		public bool GetDeviceStatus(MMDevice device)
+		{
+			return devices[device];
 		}
 
 		public async void Play()

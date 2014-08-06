@@ -22,9 +22,6 @@ namespace Micspam
 		string audioSourceDir = "sources";
 		bool searchChildren = true;
 
-		List<string> acceptedExtensions;
-		Dictionary<string, string> extensionNames;
-
 		List<AudioInfo> audioInfos;
 
 		List<DeviceInfo> deviceInfos;
@@ -65,52 +62,20 @@ namespace Micspam
 
 		private void RefreshAudioList()
 		{
-			if (!Directory.Exists(audioSourceDir))
-			{
-				MessageBox.Show(this, "Couldn't refresh list of audios, source directory doesn't exist! (\"" + audioSourceDir + "\")", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-
-			Console.WriteLine("Refreshing audio list from \"{0}\"", audioSourceDir);
+			listAudios.Items.Clear();
 
 			lblAudioSourceDir.Text = Path.GetFullPath(audioSourceDir);
 
-			string[] files = Directory.GetFiles(audioSourceDir, "*.*", searchChildren ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-
-			if (!files.Any())
+			LoadAudiosForm form = new LoadAudiosForm(audioSourceDir, searchChildren, deviceInfos);
+			if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.Cancel)
 			{
-				Console.WriteLine("Couldn't find any files");
+				Console.WriteLine("Audio loading cancelled by user");
 				return;
 			}
 
-			int index = 0;
-			foreach (string file in files)
+			audioInfos = form.Infos;
+			foreach (AudioInfo info in audioInfos)
 			{
-				string extension = Path.GetExtension(file);
-				if (!acceptedExtensions.Contains(extension))
-				{
-					Console.WriteLine("Invalid file extension ({0})", extension);
-					continue;
-				}
-
-				string name = Path.GetFileNameWithoutExtension(file);
-				string source = file;
-				string fullPath = Path.GetFullPath(file);
-				string type = extensionNames[extension];
-				TimeSpan length = AudioLength.Get(fullPath);
-
-				AudioInfo info = new AudioInfo(index, name, fullPath, source, type, length);
-				info.PopulateDevices(GetDevices().ToArray());
-
-				ListViewItem item = new ListViewItem(new string[] {
-					"",
-					info.name,
-					info.length.ToString("%m\\:ss"),
-					info.type,
-					info.source
-				});
-
-				info.listItem = item;
 				info.Stopped += (s, e) =>
 				{
 					ListViewItem infoItem = info.listItem;
@@ -128,16 +93,10 @@ namespace Micspam
 							UpdateAudioSettingsPanel(info);
 				};
 
-				audioInfos.Add(info);
-
-				Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3})", index, name, type, length.ToString("%m\\:ss"));
-
-				index += 1;
+				listAudios.Items.Add(info.listItem);
 			}
 
 			FilterAudioList("");
-
-			Console.WriteLine("Done");
 		}
 
 		private void FilterAudioList(string filter)
@@ -236,14 +195,6 @@ namespace Micspam
 		{
 			audioInfos = new List<AudioInfo>();
 
-			acceptedExtensions = new List<string>();
-			acceptedExtensions.Add(".wav");
-			acceptedExtensions.Add(".mp3");
-
-			extensionNames = new Dictionary<string, string>();
-			extensionNames.Add(".wav", "Waveform");
-			extensionNames.Add(".mp3", "MP3");
-
 			deviceInfos = new List<DeviceInfo>();
 			RefreshDevices();
 		}
@@ -288,8 +239,7 @@ namespace Micspam
 				ListViewItem item = new ListViewItem(device.FriendlyName);
 				item.Tag = device;
 
-				if (device.FriendlyName == defaultDevice.FriendlyName) // may not be best implementation
-					item.Checked = true;
+				item.Checked = info.GetDeviceStatus(device);
 
 				listAudioOutputDevices.Items.Add(item);
 			}
