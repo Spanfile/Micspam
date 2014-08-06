@@ -24,7 +24,7 @@ namespace Micspam
 		List<string> acceptedExtensions;
 		Dictionary<string, string> extensionNames;
 
-		List<MMDevice> devices;
+		List<DeviceInfo> deviceInfos;
 		MMDevice defaultDevice;
 
 		public MainForm()
@@ -34,7 +34,7 @@ namespace Micspam
 
 		private void RefreshDevices()
 		{
-			devices.Clear();
+			deviceInfos.Clear();
 
 			Console.WriteLine("Refreshing devices");
 			using (MMDeviceEnumerator enumerator = new MMDeviceEnumerator())
@@ -46,7 +46,7 @@ namespace Micspam
 				{
 					foreach (MMDevice device in deviceCollection)
 					{
-						devices.Add(device);
+						deviceInfos.Add(new DeviceInfo(device));
 						Console.WriteLine("Adding \"{0}\"", device.FriendlyName);
 					}
 				}
@@ -91,7 +91,7 @@ namespace Micspam
 				TimeSpan length = AudioLength.Get(fullPath);
 
 				AudioInfo info = new AudioInfo(index, name, fullPath, source, type, length);
-				info.PopulateDevices(devices.ToArray());
+				info.PopulateDevices(GetDevices().ToArray());
 				infos.Add(info);
 
 				Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3})", index, name, type, length.ToString("%m\\:ss"));
@@ -167,12 +167,12 @@ namespace Micspam
 
 		private List<AudioInfo> GetAudioInfos()
 		{
-			return listAudios.Items.Cast<ListViewItem>().Select(i => i.Tag as AudioInfo).ToList();
+			return listAudios.GetItems().Select(i => i.Tag as AudioInfo).ToList();
 		}
 
 		private ListViewItem GetListItemOf(AudioInfo info)
 		{
-			return listAudios.Items.Cast<ListViewItem>().Where(i => (i.Tag as AudioInfo).Equals(info)).FirstOrDefault();
+			return listAudios.GetItems().Where(i => (i.Tag as AudioInfo).Equals(info)).FirstOrDefault();
 		}
 
 		private void StopAllAudios()
@@ -188,6 +188,22 @@ namespace Micspam
 			listAudioOutputDevices.Enabled = !info.Playing;
 		}
 
+		private List<MMDevice> GetDevices()
+		{
+			return deviceInfos.Select(d => d.device).ToList();
+		}
+
+		private List<MMDevice> GetEnabledDevices()
+		{
+			return deviceInfos.Where(d => d.enabled).Select(d => d.device).ToList();
+		}
+
+		private void PrintDeviceList()
+		{
+			foreach (DeviceInfo info in deviceInfos)
+				Console.WriteLine("\"{0}\": {1}", info.device.FriendlyName, info.enabled);
+		}
+
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			lblAudioSourceDir.Text = Path.GetFileName(audioSourceDir);
@@ -200,7 +216,7 @@ namespace Micspam
 			extensionNames.Add(".wav", "Waveform");
 			extensionNames.Add(".mp3", "MP3");
 
-			devices = new List<MMDevice>();
+			deviceInfos = new List<DeviceInfo>();
 			RefreshDevices();
 		}
 
@@ -239,7 +255,7 @@ namespace Micspam
 			trackAudioVolume.Value = (int)(info.volume * 100);
 
 			listAudioOutputDevices.Items.Clear();
-			foreach (MMDevice device in devices)
+			foreach (MMDevice device in GetEnabledDevices())
 			{
 				ListViewItem item = new ListViewItem(device.FriendlyName);
 				item.Tag = device;
@@ -299,6 +315,19 @@ namespace Micspam
 		private void btnStopAllAudios_Click(object sender, EventArgs e)
 		{
 			StopAllAudios();
+		}
+
+		private void menuViewOutputDevices_Click(object sender, EventArgs e)
+		{
+			DevicesForm form = new DevicesForm();
+			form.PopulateDeviceList(deviceInfos);
+
+			if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+			{
+				deviceInfos = form.GetDeviceList();
+				Console.WriteLine("Device list updated");
+				PrintDeviceList();
+			}
 		}
 	}
 }

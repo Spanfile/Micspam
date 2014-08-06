@@ -245,6 +245,7 @@
 			this.menuViewOutputDevices.Name = "menuViewOutputDevices";
 			this.menuViewOutputDevices.Size = new System.Drawing.Size(194, 22);
 			this.menuViewOutputDevices.Text = "Output devices";
+			this.menuViewOutputDevices.Click += new System.EventHandler(this.menuViewOutputDevices_Click);
 			// 
 			// menuViewAudioDir
 			// 
