@@ -41,10 +41,34 @@ namespace Micspam
 			acceptedExtensions = new List<string>();
 			acceptedExtensions.Add(".wav");
 			acceptedExtensions.Add(".mp3");
+			acceptedExtensions.Add(".wma");
+
+			acceptedExtensions.Add(".mp4");
+			acceptedExtensions.Add(".m4a");
+			acceptedExtensions.Add(".m4b");
+			acceptedExtensions.Add(".m4p");
+			acceptedExtensions.Add(".m4r");
+			acceptedExtensions.Add(".m4v");
+
+			acceptedExtensions.Add(".3gp");
+			acceptedExtensions.Add(".aac");
+			acceptedExtensions.Add(".flac");
 
 			extensionNames = new Dictionary<string, string>();
 			extensionNames.Add(".wav", "Waveform");
 			extensionNames.Add(".mp3", "MP3");
+			extensionNames.Add(".wma", "Windows Media Audio");
+
+			extensionNames.Add(".mp4", "MPEG-4");
+			extensionNames.Add(".m4a", "MPEG-4");
+			extensionNames.Add(".m4b", "MPEG-4");
+			extensionNames.Add(".m4p", "MPEG-4");
+			extensionNames.Add(".m4r", "MPEG-4");
+			extensionNames.Add(".m4v", "MPEG-4");
+
+			extensionNames.Add(".3gp", "3GP");
+			extensionNames.Add(".aac", "AAC");
+			extensionNames.Add(".flac", "FLAC");
 
 			setStatus = new SetStatus((s, p, e) =>
 			{
