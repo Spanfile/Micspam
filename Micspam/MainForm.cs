@@ -168,7 +168,7 @@ namespace Micspam
 
 		private void UpdateSettings()
 		{
-			menuSettingsChangeSourceDir.Enabled = !GetPlayingAudios().Any();
+			menuSettingsChangeDir.Enabled = !GetPlayingAudios().Any();
 		}
 
 		private List<MMDevice> GetDevices()
@@ -310,7 +310,17 @@ namespace Micspam
 			}
 		}
 
-		private void menuSettingsChangeSourceDir_Click(object sender, EventArgs e)
+		private void menuSettingsFindFromChildren_Click(object sender, EventArgs e)
+		{
+			searchChildren = menuSettingsChangeDir.Checked;
+		}
+
+		private void textAudioFilter_TextChanged(object sender, EventArgs e)
+		{
+			FilterAudioList(textAudioFilter.Text);
+		}
+
+		private void menuSettingsChangeDirBrowse_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog fbd = new FolderBrowserDialog();
 			fbd.Description = "Select the folder from where the program will load sounds";
@@ -323,14 +333,10 @@ namespace Micspam
 			}
 		}
 
-		private void menuSettingsFindFromChildren_Click(object sender, EventArgs e)
+		private void menuSettingsChangeDirDefault_Click(object sender, EventArgs e)
 		{
-			searchChildren = menuSettingsChangeSourceDir.Checked;
-		}
-
-		private void textAudioFilter_TextChanged(object sender, EventArgs e)
-		{
-			FilterAudioList(textAudioFilter.Text);
+			audioSourceDir = "sources";
+			RefreshAudioList();
 		}
 	}
 }

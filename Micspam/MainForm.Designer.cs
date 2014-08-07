@@ -50,7 +50,9 @@
 			this.menuViewOutputDevices = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewAudioDir = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuSettingsChangeSourceDir = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsChangeDir = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsChangeDirBrowse = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsChangeDirDefault = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsFindFromChildren = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnRefreshAudioList = new System.Windows.Forms.Button();
 			this.trackGlobalVolume = new System.Windows.Forms.TrackBar();
@@ -74,14 +76,14 @@
 			// listAudios
 			// 
 			this.listAudios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.listAudios.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnAudioPlaying,
-			this.columnAudioName,
-			this.columnAudioLength,
-			this.columnAudioType,
-			this.columnAudioSource});
+            this.columnAudioPlaying,
+            this.columnAudioName,
+            this.columnAudioLength,
+            this.columnAudioType,
+            this.columnAudioSource});
 			this.listAudios.FullRowSelect = true;
 			this.listAudios.GridLines = true;
 			this.listAudios.HideSelection = false;
@@ -129,8 +131,8 @@
 			// groupAudioSettings
 			// 
 			this.groupAudioSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupAudioSettings.Controls.Add(this.lblAudioVolumeValue);
 			this.groupAudioSettings.Controls.Add(this.btnUseDefaultDevice);
 			this.groupAudioSettings.Controls.Add(this.label3);
@@ -180,7 +182,7 @@
 			// trackAudioVolume
 			// 
 			this.trackAudioVolume.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.trackAudioVolume.AutoSize = false;
 			this.trackAudioVolume.Location = new System.Drawing.Point(6, 266);
 			this.trackAudioVolume.Maximum = 100;
@@ -205,8 +207,8 @@
 			// listAudioOutputDevices
 			// 
 			this.listAudioOutputDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.listAudioOutputDevices.CheckBoxes = true;
 			this.listAudioOutputDevices.FullRowSelect = true;
 			this.listAudioOutputDevices.Location = new System.Drawing.Point(6, 37);
@@ -230,8 +232,8 @@
 			// menuMain
 			// 
 			this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.menuView,
-			this.menuSettings});
+            this.menuView,
+            this.menuSettings});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Size = new System.Drawing.Size(767, 24);
@@ -241,8 +243,8 @@
 			// menuView
 			// 
 			this.menuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.menuViewOutputDevices,
-			this.menuViewAudioDir});
+            this.menuViewOutputDevices,
+            this.menuViewAudioDir});
 			this.menuView.Name = "menuView";
 			this.menuView.Size = new System.Drawing.Size(44, 20);
 			this.menuView.Text = "View";
@@ -264,18 +266,34 @@
 			// menuSettings
 			// 
 			this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.menuSettingsChangeSourceDir,
-			this.menuSettingsFindFromChildren});
+            this.menuSettingsChangeDir,
+            this.menuSettingsFindFromChildren});
 			this.menuSettings.Name = "menuSettings";
 			this.menuSettings.Size = new System.Drawing.Size(61, 20);
 			this.menuSettings.Text = "Settings";
 			// 
-			// menuSettingsChangeSourceDir
+			// menuSettingsChangeDir
 			// 
-			this.menuSettingsChangeSourceDir.Name = "menuSettingsChangeSourceDir";
-			this.menuSettingsChangeSourceDir.Size = new System.Drawing.Size(251, 22);
-			this.menuSettingsChangeSourceDir.Text = "Change source directory";
-			this.menuSettingsChangeSourceDir.Click += new System.EventHandler(this.menuSettingsChangeSourceDir_Click);
+			this.menuSettingsChangeDir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsChangeDirBrowse,
+            this.menuSettingsChangeDirDefault});
+			this.menuSettingsChangeDir.Name = "menuSettingsChangeDir";
+			this.menuSettingsChangeDir.Size = new System.Drawing.Size(251, 22);
+			this.menuSettingsChangeDir.Text = "Change source directory";
+			// 
+			// menuSettingsChangeDirBrowse
+			// 
+			this.menuSettingsChangeDirBrowse.Name = "menuSettingsChangeDirBrowse";
+			this.menuSettingsChangeDirBrowse.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsChangeDirBrowse.Text = "Browse...";
+			this.menuSettingsChangeDirBrowse.Click += new System.EventHandler(this.menuSettingsChangeDirBrowse_Click);
+			// 
+			// menuSettingsChangeDirDefault
+			// 
+			this.menuSettingsChangeDirDefault.Name = "menuSettingsChangeDirDefault";
+			this.menuSettingsChangeDirDefault.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsChangeDirDefault.Text = "Default";
+			this.menuSettingsChangeDirDefault.Click += new System.EventHandler(this.menuSettingsChangeDirDefault_Click);
 			// 
 			// menuSettingsFindFromChildren
 			// 
@@ -323,8 +341,8 @@
 			// splitMain
 			// 
 			this.splitMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.splitMain.Location = new System.Drawing.Point(13, 28);
 			this.splitMain.Name = "splitMain";
 			// 
@@ -360,7 +378,7 @@
 			// textAudioFilter
 			// 
 			this.textAudioFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textAudioFilter.Location = new System.Drawing.Point(38, 304);
 			this.textAudioFilter.Name = "textAudioFilter";
 			this.textAudioFilter.Size = new System.Drawing.Size(438, 20);
@@ -370,7 +388,7 @@
 			// lblAudioSourceDir
 			// 
 			this.lblAudioSourceDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblAudioSourceDir.AutoEllipsis = true;
 			this.lblAudioSourceDir.Location = new System.Drawing.Point(3, 34);
 			this.lblAudioSourceDir.Name = "lblAudioSourceDir";
@@ -458,10 +476,12 @@
 		private System.Windows.Forms.ImageList imglistAudios;
 		private System.Windows.Forms.Button btnStopAllAudios;
 		private System.Windows.Forms.ToolStripMenuItem menuSettings;
-		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeSourceDir;
+		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeDir;
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsFindFromChildren;
 		private System.Windows.Forms.TextBox textAudioFilter;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeDirBrowse;
+		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeDirDefault;
 
 	}
 }
