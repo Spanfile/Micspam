@@ -10,4 +10,7 @@ Supported formats
 -----------------
 * MP3 (.mp3)
 * Waveform (.wav)
-* maybe Windows Media Audio (.wav)
+
+The following formats are a big maybe
+* All AAC formats (such as .mp4, .m4a, .aac)
+* FLAC
