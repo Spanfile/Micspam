@@ -136,11 +136,13 @@ namespace Micspam
 			listAudios.Items.Clear();
 
 			Wildcard wildcard = new Wildcard(filter);
-			foreach (AudioInfo info in audioInfos)
-			{
-				if (wildcard.IsMatch(info.name) || filter == "")
-					listAudios.Items.Add(info.listItem);
-			}
+			// MOORE LINQ
+			var infos = from info in audioInfos.AsEnumerable()
+						where wildcard.IsMatch(info.name) || info.name.Contains(filter)
+						select info;
+
+			foreach (var info in infos)
+				listAudios.Items.Add(info.listItem);
 		}
 
 		private void PlayAudio(AudioInfo info)
