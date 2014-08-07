@@ -112,7 +112,7 @@ namespace Micspam
 
 					Infos.Add(info);
 
-					Console.WriteLine("Added info to list (Index: {0}, name: {1}, type: {2}, length: {3})", index, name, type, length.ToString("%m\\:ss"));
+					Console.WriteLine("\"{0}\" added ({1}, {2}, {3})", name, index, type, length.ToString("%m\\:ss"));
 
 					if (shouldCancel)
 						break;
