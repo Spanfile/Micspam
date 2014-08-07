@@ -31,21 +31,24 @@
 			this.lblCurrent = new System.Windows.Forms.Label();
 			this.progressLoadProg = new System.Windows.Forms.ProgressBar();
 			this.btnCancel = new System.Windows.Forms.Button();
+			this.lblTime = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// lblCurrent
 			// 
-			this.lblCurrent.AutoSize = true;
-			this.lblCurrent.Location = new System.Drawing.Point(13, 13);
+			this.lblCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCurrent.AutoEllipsis = true;
+			this.lblCurrent.Location = new System.Drawing.Point(12, 13);
 			this.lblCurrent.Name = "lblCurrent";
-			this.lblCurrent.Size = new System.Drawing.Size(41, 13);
+			this.lblCurrent.Size = new System.Drawing.Size(384, 13);
 			this.lblCurrent.TabIndex = 0;
 			this.lblCurrent.Text = "Current";
 			// 
 			// progressLoadProg
 			// 
 			this.progressLoadProg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.progressLoadProg.Location = new System.Drawing.Point(12, 29);
 			this.progressLoadProg.Name = "progressLoadProg";
 			this.progressLoadProg.Size = new System.Drawing.Size(384, 21);
@@ -62,12 +65,22 @@
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
 			// 
+			// lblTime
+			// 
+			this.lblTime.AutoSize = true;
+			this.lblTime.Location = new System.Drawing.Point(12, 56);
+			this.lblTime.Name = "lblTime";
+			this.lblTime.Size = new System.Drawing.Size(30, 13);
+			this.lblTime.TabIndex = 3;
+			this.lblTime.Text = "Time";
+			// 
 			// LoadAudiosForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(408, 87);
+			this.Controls.Add(this.lblTime);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.progressLoadProg);
 			this.Controls.Add(this.lblCurrent);
@@ -88,5 +101,6 @@
 		private System.Windows.Forms.Label lblCurrent;
 		private System.Windows.Forms.ProgressBar progressLoadProg;
 		private System.Windows.Forms.Button btnCancel;
+		private System.Windows.Forms.Label lblTime;
 	}
 }
