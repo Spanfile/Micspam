@@ -13,6 +13,16 @@ using CSCore.Codecs;
 
 namespace Micspam
 {
+	public class PositionUpdateEventArgs : EventArgs
+	{
+		public TimeSpan Position { get; set; }
+
+		public PositionUpdateEventArgs(TimeSpan position)
+		{
+			Position = position;
+		}
+	}
+
 	public class AudioInfo
 	{
 		public ListViewItem listItem;
@@ -26,10 +36,13 @@ namespace Micspam
 		public float volume;
 		public float masterVolume;
 
+		public int positionUpdateFreq = 500;
+
 		List<Tuple<WasapiOut, IWaveSource>> audioOuts;
 		Dictionary<MMDevice, bool> devices;
 
 		public event EventHandler Stopped;
+		public event EventHandler<PositionUpdateEventArgs> PositionUpdate;
 
 		public bool Playing
 		{
@@ -113,7 +126,16 @@ namespace Micspam
 
 			Console.WriteLine("Waiting for all ({0}) events to trigger", mres.Count);
 
-			await Task.Run(() => WaitHandle.WaitAll(mres.ToArray()));
+			await Task.Run(() =>
+			{
+				while (true)
+				{
+					if (WaitHandle.WaitAll(mres.ToArray(), positionUpdateFreq))
+						return;
+
+					PositionUpdate(this, new PositionUpdateEventArgs(GetPosition()));
+				}
+			});
 
 			Console.WriteLine("\"{0}\" stopped", name);
 			audioOuts.Clear();
@@ -129,6 +151,14 @@ namespace Micspam
 			audioOuts.Clear();
 
 			Console.WriteLine("\"{0}\" forcefully stopped", name);
+		}
+
+		public TimeSpan GetPosition()
+		{
+			if (!Playing)
+				return TimeSpan.FromSeconds(0);
+
+			return audioOuts[0].Item1.WaveSource.GetPosition();
 		}
 
 		public void SetVolume(float volume)

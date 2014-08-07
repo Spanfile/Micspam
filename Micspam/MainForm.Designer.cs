@@ -63,6 +63,9 @@
 			this.lblAudioSourceDir = new System.Windows.Forms.Label();
 			this.lblGlobalVolumeValue = new System.Windows.Forms.Label();
 			this.btnStopAllAudios = new System.Windows.Forms.Button();
+			this.lblAudioPosition = new System.Windows.Forms.Label();
+			this.progAudioPos = new System.Windows.Forms.ProgressBar();
+			this.lblAudioLength = new System.Windows.Forms.Label();
 			this.groupAudioSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackAudioVolume)).BeginInit();
 			this.menuMain.SuspendLayout();
@@ -90,7 +93,7 @@
 			this.listAudios.Location = new System.Drawing.Point(0, 53);
 			this.listAudios.MultiSelect = false;
 			this.listAudios.Name = "listAudios";
-			this.listAudios.Size = new System.Drawing.Size(476, 245);
+			this.listAudios.Size = new System.Drawing.Size(473, 245);
 			this.listAudios.SmallImageList = this.imglistAudios;
 			this.listAudios.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.listAudios.TabIndex = 0;
@@ -133,6 +136,9 @@
 			this.groupAudioSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupAudioSettings.Controls.Add(this.lblAudioLength);
+			this.groupAudioSettings.Controls.Add(this.progAudioPos);
+			this.groupAudioSettings.Controls.Add(this.lblAudioPosition);
 			this.groupAudioSettings.Controls.Add(this.lblAudioVolumeValue);
 			this.groupAudioSettings.Controls.Add(this.btnUseDefaultDevice);
 			this.groupAudioSettings.Controls.Add(this.label3);
@@ -143,7 +149,7 @@
 			this.groupAudioSettings.Enabled = false;
 			this.groupAudioSettings.Location = new System.Drawing.Point(3, 29);
 			this.groupAudioSettings.Name = "groupAudioSettings";
-			this.groupAudioSettings.Size = new System.Drawing.Size(253, 295);
+			this.groupAudioSettings.Size = new System.Drawing.Size(282, 295);
 			this.groupAudioSettings.TabIndex = 1;
 			this.groupAudioSettings.TabStop = false;
 			this.groupAudioSettings.Text = "Audio settings";
@@ -152,11 +158,11 @@
 			// 
 			this.lblAudioVolumeValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblAudioVolumeValue.AutoSize = true;
-			this.lblAudioVolumeValue.Location = new System.Drawing.Point(186, 247);
+			this.lblAudioVolumeValue.Location = new System.Drawing.Point(215, 227);
 			this.lblAudioVolumeValue.Name = "lblAudioVolumeValue";
-			this.lblAudioVolumeValue.Size = new System.Drawing.Size(61, 13);
+			this.lblAudioVolumeValue.Size = new System.Drawing.Size(33, 13);
 			this.lblAudioVolumeValue.TabIndex = 6;
-			this.lblAudioVolumeValue.Text = "(1.00, 1.00)";
+			this.lblAudioVolumeValue.Text = "100%";
 			// 
 			// btnUseDefaultDevice
 			// 
@@ -173,7 +179,7 @@
 			// 
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 247);
+			this.label3.Location = new System.Drawing.Point(6, 227);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(42, 13);
 			this.label3.TabIndex = 4;
@@ -184,10 +190,10 @@
 			this.trackAudioVolume.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.trackAudioVolume.AutoSize = false;
-			this.trackAudioVolume.Location = new System.Drawing.Point(6, 266);
+			this.trackAudioVolume.Location = new System.Drawing.Point(6, 246);
 			this.trackAudioVolume.Maximum = 100;
 			this.trackAudioVolume.Name = "trackAudioVolume";
-			this.trackAudioVolume.Size = new System.Drawing.Size(241, 23);
+			this.trackAudioVolume.Size = new System.Drawing.Size(270, 23);
 			this.trackAudioVolume.TabIndex = 3;
 			this.trackAudioVolume.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackAudioVolume.Value = 100;
@@ -196,7 +202,7 @@
 			// btnPlayAudio
 			// 
 			this.btnPlayAudio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnPlayAudio.Location = new System.Drawing.Point(6, 221);
+			this.btnPlayAudio.Location = new System.Drawing.Point(6, 201);
 			this.btnPlayAudio.Name = "btnPlayAudio";
 			this.btnPlayAudio.Size = new System.Drawing.Size(75, 23);
 			this.btnPlayAudio.TabIndex = 2;
@@ -214,7 +220,7 @@
 			this.listAudioOutputDevices.Location = new System.Drawing.Point(6, 37);
 			this.listAudioOutputDevices.MultiSelect = false;
 			this.listAudioOutputDevices.Name = "listAudioOutputDevices";
-			this.listAudioOutputDevices.Size = new System.Drawing.Size(241, 110);
+			this.listAudioOutputDevices.Size = new System.Drawing.Size(270, 110);
 			this.listAudioOutputDevices.TabIndex = 1;
 			this.listAudioOutputDevices.UseCompatibleStateImageBehavior = false;
 			this.listAudioOutputDevices.View = System.Windows.Forms.View.List;
@@ -236,7 +242,7 @@
             this.menuSettings});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
 			this.menuMain.Name = "menuMain";
-			this.menuMain.Size = new System.Drawing.Size(767, 24);
+			this.menuMain.Size = new System.Drawing.Size(793, 24);
 			this.menuMain.TabIndex = 2;
 			this.menuMain.Text = "menuStrip1";
 			// 
@@ -319,7 +325,7 @@
 			// 
 			this.trackGlobalVolume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.trackGlobalVolume.AutoSize = false;
-			this.trackGlobalVolume.Location = new System.Drawing.Point(277, 24);
+			this.trackGlobalVolume.Location = new System.Drawing.Point(274, 24);
 			this.trackGlobalVolume.Maximum = 100;
 			this.trackGlobalVolume.Name = "trackGlobalVolume";
 			this.trackGlobalVolume.Size = new System.Drawing.Size(199, 23);
@@ -332,7 +338,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(274, 5);
+			this.label2.Location = new System.Drawing.Point(271, 5);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(74, 13);
 			this.label2.TabIndex = 5;
@@ -361,8 +367,8 @@
 			// 
 			this.splitMain.Panel2.Controls.Add(this.btnStopAllAudios);
 			this.splitMain.Panel2.Controls.Add(this.groupAudioSettings);
-			this.splitMain.Size = new System.Drawing.Size(742, 327);
-			this.splitMain.SplitterDistance = 479;
+			this.splitMain.Size = new System.Drawing.Size(768, 327);
+			this.splitMain.SplitterDistance = 476;
 			this.splitMain.TabIndex = 6;
 			// 
 			// label4
@@ -381,7 +387,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textAudioFilter.Location = new System.Drawing.Point(38, 304);
 			this.textAudioFilter.Name = "textAudioFilter";
-			this.textAudioFilter.Size = new System.Drawing.Size(438, 20);
+			this.textAudioFilter.Size = new System.Drawing.Size(435, 20);
 			this.textAudioFilter.TabIndex = 8;
 			this.textAudioFilter.TextChanged += new System.EventHandler(this.textAudioFilter_TextChanged);
 			// 
@@ -392,7 +398,7 @@
 			this.lblAudioSourceDir.AutoEllipsis = true;
 			this.lblAudioSourceDir.Location = new System.Drawing.Point(3, 34);
 			this.lblAudioSourceDir.Name = "lblAudioSourceDir";
-			this.lblAudioSourceDir.Size = new System.Drawing.Size(268, 13);
+			this.lblAudioSourceDir.Size = new System.Drawing.Size(265, 13);
 			this.lblAudioSourceDir.TabIndex = 7;
 			this.lblAudioSourceDir.Text = "Audio source directory";
 			// 
@@ -400,12 +406,12 @@
 			// 
 			this.lblGlobalVolumeValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblGlobalVolumeValue.AutoSize = true;
-			this.lblGlobalVolumeValue.Location = new System.Drawing.Point(441, 5);
+			this.lblGlobalVolumeValue.Location = new System.Drawing.Point(438, 5);
 			this.lblGlobalVolumeValue.Name = "lblGlobalVolumeValue";
 			this.lblGlobalVolumeValue.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.lblGlobalVolumeValue.Size = new System.Drawing.Size(34, 13);
+			this.lblGlobalVolumeValue.Size = new System.Drawing.Size(33, 13);
 			this.lblGlobalVolumeValue.TabIndex = 6;
-			this.lblGlobalVolumeValue.Text = "(1.00)";
+			this.lblGlobalVolumeValue.Text = "100%";
 			// 
 			// btnStopAllAudios
 			// 
@@ -417,11 +423,40 @@
 			this.btnStopAllAudios.UseVisualStyleBackColor = true;
 			this.btnStopAllAudios.Click += new System.EventHandler(this.btnStopAllAudios_Click);
 			// 
+			// lblAudioPosition
+			// 
+			this.lblAudioPosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblAudioPosition.AutoSize = true;
+			this.lblAudioPosition.Location = new System.Drawing.Point(6, 275);
+			this.lblAudioPosition.Name = "lblAudioPosition";
+			this.lblAudioPosition.Size = new System.Drawing.Size(25, 13);
+			this.lblAudioPosition.TabIndex = 7;
+			this.lblAudioPosition.Text = "Pos";
+			// 
+			// progAudioPos
+			// 
+			this.progAudioPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.progAudioPos.Location = new System.Drawing.Point(37, 275);
+			this.progAudioPos.Name = "progAudioPos";
+			this.progAudioPos.Size = new System.Drawing.Size(198, 14);
+			this.progAudioPos.TabIndex = 8;
+			// 
+			// lblAudioLength
+			// 
+			this.lblAudioLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblAudioLength.AutoSize = true;
+			this.lblAudioLength.Location = new System.Drawing.Point(241, 275);
+			this.lblAudioLength.Name = "lblAudioLength";
+			this.lblAudioLength.Size = new System.Drawing.Size(25, 13);
+			this.lblAudioLength.TabIndex = 9;
+			this.lblAudioLength.Text = "Len";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(767, 367);
+			this.ClientSize = new System.Drawing.Size(793, 367);
 			this.Controls.Add(this.splitMain);
 			this.Controls.Add(this.menuMain);
 			this.MainMenuStrip = this.menuMain;
@@ -482,6 +517,9 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeDirBrowse;
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsChangeDirDefault;
+		private System.Windows.Forms.ProgressBar progAudioPos;
+		private System.Windows.Forms.Label lblAudioPosition;
+		private System.Windows.Forms.Label lblAudioLength;
 
 	}
 }

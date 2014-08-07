@@ -28,9 +28,22 @@ namespace Micspam
 		List<DeviceInfo> deviceInfos;
 		MMDevice defaultDevice;
 
+		delegate void UpdateAudioProgress(AudioInfo info);
+		UpdateAudioProgress updateAudioProgress;
+
 		public MainForm()
 		{
 			InitializeComponent();
+
+			updateAudioProgress = new UpdateAudioProgress((i) =>
+			{
+				if (listAudios.SelectedItems.Count > 0)
+					if (GetAudioInfoOf(listAudios.SelectedItems[0]).Equals(i))
+					{
+						lblAudioPosition.Text = i.GetPosition().ToString("%m\\:ss");
+						progAudioPos.Value = (int)i.GetPosition().TotalMilliseconds;
+					}
+			});
 		}
 
 		private void RefreshDevices()
@@ -91,7 +104,23 @@ namespace Micspam
 
 					if (listAudios.SelectedItems.Count > 0)
 						if (infoItem.Equals(listAudios.SelectedItems[0]))
+						{
 							UpdateAudioSettingsPanel(info);
+
+							lblAudioPosition.Text = "0:00";
+							progAudioPos.Value = 0;
+						}
+				};
+
+				info.PositionUpdate += (s, e) =>
+				{
+					// best log message
+					//Console.WriteLine("HEY YO! {0} JUST UPDATED! IT SAYS IT'S POSITION IS {1}!", info.name, e.Position.ToString("%m\\:ss\\.fff"));
+
+					if (this.InvokeRequired)
+						this.Invoke(updateAudioProgress, info);
+					else
+						updateAudioProgress(info);
 				};
 
 				listAudios.Items.Add(info.listItem);
@@ -124,7 +153,7 @@ namespace Micspam
 		private float UpdateGlobalVolume()
 		{
 			float volume = (float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum;
-			lblGlobalVolumeValue.Text = String.Format("({0:0.00})", volume);
+			lblGlobalVolumeValue.Text = String.Format("{0}%", volume * 100);
 
 			foreach (AudioInfo info in audioInfos)
 				info.SetMasterVolume(volume);
@@ -137,8 +166,7 @@ namespace Micspam
 		private float UpdateAudioVolume()
 		{
 			float volume = (float)trackAudioVolume.Value / (float)trackAudioVolume.Maximum;
-			float modified = volume * ((float)trackGlobalVolume.Value / (float)trackGlobalVolume.Maximum);
-			lblAudioVolumeValue.Text = String.Format("({0:0.00}, {1:0.00})", volume, modified);
+			lblAudioVolumeValue.Text = String.Format("{0}%", volume * 100);
 
 			if (listAudios.SelectedItems.Count > 0)
 				GetAudioInfoOf(listAudios.SelectedItems[0]).SetVolume(volume);
@@ -233,6 +261,11 @@ namespace Micspam
 			//Console.WriteLine((listAudios.SelectedItems[0].Tag as AudioInfo).Playing);
 
 			trackAudioVolume.Value = (int)(info.volume * 100);
+			lblAudioLength.Text = info.length.ToString("%m\\:ss");
+
+			progAudioPos.Maximum = (int)info.length.TotalMilliseconds;
+			progAudioPos.Value = (int)info.GetPosition().TotalMilliseconds;
+			lblAudioPosition.Text = info.GetPosition().ToString("%m\\:ss");
 
 			listAudioOutputDevices.Items.Clear();
 			foreach (MMDevice device in GetEnabledDevices())
