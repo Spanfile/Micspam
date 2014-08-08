@@ -21,15 +21,14 @@ namespace Micspam
 		List<DeviceInfo> devices;
 		bool shouldCancel = false;
 
-		List<string> acceptedExtensions;
-		Dictionary<string, string> extensionNames;
+		List<Tuple<string, string>> extensions;
 
 		delegate void SetStatus(string text, int progress, TimeSpan elapsed);
 		delegate void SetProgressMax(int max);
 		SetStatus setStatus;
 		SetProgressMax setProgressMax;
 
-		public LoadAudiosForm(string sourcePath, bool searchChildren, List<DeviceInfo> devices)
+		public LoadAudiosForm(string sourcePath, bool searchChildren, List<DeviceInfo> devices, List<Tuple<string, string>> extensions)
 		{
 			InitializeComponent();
 
@@ -38,37 +37,7 @@ namespace Micspam
 			this.searchChildren = searchChildren;
 			this.devices = devices;
 
-			acceptedExtensions = new List<string>();
-			acceptedExtensions.Add(".wav");
-			acceptedExtensions.Add(".mp3");
-			acceptedExtensions.Add(".wma");
-
-			acceptedExtensions.Add(".mp4");
-			acceptedExtensions.Add(".m4a");
-			acceptedExtensions.Add(".m4b");
-			acceptedExtensions.Add(".m4p");
-			acceptedExtensions.Add(".m4r");
-			acceptedExtensions.Add(".m4v");
-
-			acceptedExtensions.Add(".3gp");
-			acceptedExtensions.Add(".aac");
-			acceptedExtensions.Add(".flac");
-
-			extensionNames = new Dictionary<string, string>();
-			extensionNames.Add(".wav", "Waveform");
-			extensionNames.Add(".mp3", "MP3");
-			extensionNames.Add(".wma", "Windows Media Audio");
-
-			extensionNames.Add(".mp4", "MPEG-4");
-			extensionNames.Add(".m4a", "MPEG-4");
-			extensionNames.Add(".m4b", "MPEG-4");
-			extensionNames.Add(".m4p", "MPEG-4");
-			extensionNames.Add(".m4r", "MPEG-4");
-			extensionNames.Add(".m4v", "MPEG-4");
-
-			extensionNames.Add(".3gp", "3GP");
-			extensionNames.Add(".aac", "AAC");
-			extensionNames.Add(".flac", "FLAC");
+			this.extensions = extensions;
 
 			setStatus = new SetStatus((s, p, e) =>
 			{
@@ -96,7 +65,7 @@ namespace Micspam
 				Console.WriteLine("Refreshing audio list from \"{0}\"", path);
 
 				var files = from file in Directory.EnumerateFiles(path, "*", searchChildren ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-							where acceptedExtensions.Contains(Path.GetExtension(file))
+							where IsAccepted(Path.GetExtension(file))
 							select file;
 
 				if (!files.Any())
@@ -119,7 +88,7 @@ namespace Micspam
 					string name = Path.GetFileNameWithoutExtension(file);
 					string source = file;
 					string fullPath = Path.GetFullPath(file);
-					string type = extensionNames[extension];
+					string type = GetExtensionName(extension);
 					TimeSpan length = AudioLength.Get(fullPath);
 
 					AudioInfo info = new AudioInfo(index, name, fullPath, source, type, length);
@@ -153,6 +122,16 @@ namespace Micspam
 
 				return new int[] { index, count };
 			});
+		}
+
+		private bool IsAccepted(string extension)
+		{
+			return extensions.Select(t => t.Item1).Contains(extension);
+		}
+
+		private string GetExtensionName(string extension)
+		{
+			return extensions.First(t => t.Item1.Equals(extension)).Item2;
 		}
 
 		private async void LoadAudiosForm_Shown(object sender, EventArgs e)

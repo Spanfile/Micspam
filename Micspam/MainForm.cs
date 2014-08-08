@@ -24,6 +24,7 @@ namespace Micspam
 		bool searchChildren = true;
 
 		List<AudioInfo> audioInfos;
+		List<Tuple<string, string>> extensions;
 
 		List<DeviceInfo> deviceInfos;
 		MMDevice defaultDevice;
@@ -80,7 +81,7 @@ namespace Micspam
 
 			lblAudioSourceDir.Text = Path.GetFullPath(audioSourceDir);
 
-			LoadAudiosForm form = new LoadAudiosForm(audioSourceDir, searchChildren, deviceInfos);
+			LoadAudiosForm form = new LoadAudiosForm(audioSourceDir, searchChildren, deviceInfos, extensions);
 			if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.Cancel)
 			{
 				Console.WriteLine("Audio loading cancelled by user");
@@ -147,8 +148,6 @@ namespace Micspam
 
 		private void PlayAudio(AudioInfo info)
 		{
-			info.SetMasterVolume(UpdateGlobalVolume());
-			info.SetVolume(UpdateAudioVolume());
 			info.Play();
 		}
 
@@ -168,10 +167,12 @@ namespace Micspam
 		private float UpdateAudioVolume()
 		{
 			float volume = (float)trackAudioVolume.Value / (float)trackAudioVolume.Maximum;
-			lblAudioVolumeValue.Text = String.Format("{0}%", volume * 100);
 
 			if (listAudios.SelectedItems.Count > 0)
+			{
 				GetAudioInfoOf(listAudios.SelectedItems[0]).SetVolume(volume);
+				lblAudioVolumeValue.Text = String.Format("{0}%", volume * 100);
+			}
 
 			return volume;
 		}
@@ -192,6 +193,7 @@ namespace Micspam
 			btnPlayAudio.Text = info.Playing ? "Stop" : "Play";
 			info.listItem.ImageIndex = info.Playing ? 0 : 1;
 			listAudioOutputDevices.Enabled = !info.Playing;
+			btnUseDefaultDevice.Enabled = !info.Playing;
 
 			UpdateSettings();
 		}
@@ -199,6 +201,7 @@ namespace Micspam
 		private void UpdateSettings()
 		{
 			menuSettingsChangeDir.Enabled = !GetPlayingAudios().Any();
+			btnRefreshAudioList.Enabled = !GetPlayingAudios().Any();
 		}
 
 		private List<MMDevice> GetDevices()
@@ -224,6 +227,61 @@ namespace Micspam
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
+			extensions = new List<Tuple<string, string>>();
+
+			if (!File.Exists("extensions.txt"))
+			{
+				MessageBox.Show(this, "Cannot load accepted extensions; extensions.txt is missing!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				this.Close();
+				return;
+			}
+
+			var lines = File.ReadLines("extensions.txt");
+			int index = 0;
+			int loaded = 0;
+			foreach (string line in lines)
+			{
+				index += 1; // index is incremented at start to make sure it increments at every iteration
+
+				if (line.StartsWith("#") || line.Trim() == "") // comments and blank lines are ignored
+					continue;
+
+				string[] args = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+				if (args.Length < 2)
+				{
+					Console.WriteLine("{0}: invalid amount of arguments", index);
+					continue;
+				}
+
+				string type = args[0];
+				string name = args[1];
+
+				if (!type.StartsWith("."))
+				{
+					Console.WriteLine("{0}: {1} isn't a valid type", index, type);
+					continue;
+				}
+
+				if (extensions.Select(t => t.Item1).Contains(type))
+				{
+					Console.WriteLine("{0}: {1} is already added", index, type);
+					continue;
+				}
+
+				extensions.Add(new Tuple<string, string>(type, name));
+				Console.WriteLine("Added {0} ({1})", name, type);
+				loaded += 1;
+			}
+
+			if (loaded == 0)
+			{
+				MessageBox.Show(this, "No extensions loaded!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				this.Close();
+				return;
+			}
+			Console.WriteLine("Loaded {0} extensions", loaded);
+
 			audioInfos = new List<AudioInfo>();
 
 			deviceInfos = new List<DeviceInfo>();

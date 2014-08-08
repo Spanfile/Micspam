@@ -1,0 +1,15 @@
+﻿# These are the formats the app can load
+# I suggest you don't edit this, that can cause poop-hitting-the-fan action
+
+.wav Waveform
+.mp3 MP3
+.wma Windows Media Audio
+.mp4 MPEG-4
+.m4a MPEG-4
+.m4b MPEG-4
+.m4p MPEG-4
+.m4r MPEG-4
+.m4v MPEG-4
+.3gp 3GP
+.aac AAC
+.flac FLAC
