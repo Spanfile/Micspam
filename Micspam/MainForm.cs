@@ -72,7 +72,7 @@ namespace Micspam
 				}
 			}
 
-			Console.WriteLine("Done");
+			Console.WriteLine("Found {0} devices", deviceInfos.Count);
 		}
 
 		private void RefreshAudioList()

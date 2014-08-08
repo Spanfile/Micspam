@@ -118,7 +118,7 @@ namespace Micspam
 					index += 1;
 				}
 
-				Console.WriteLine("Done");
+				Console.WriteLine("Loaded {0} audios", Infos.Count);
 
 				return new int[] { index, count };
 			});
