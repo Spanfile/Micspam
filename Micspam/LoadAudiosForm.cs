@@ -144,7 +144,7 @@ namespace Micspam
 			int[] result = await GetLoadTask(() => timer.Elapsed);
 
 			timer.Stop();
-			Console.WriteLine("{0} files out of {1} added in {2} ms", result[0], result[1], timer.Elapsed.ToString("%m\\:ss\\.fff"));
+			Console.WriteLine("{0} files out of {1} added in {2}", result[0], result[1], timer.Elapsed.ToString("%m\\:ss\\.fff"));
 
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;
 		}
