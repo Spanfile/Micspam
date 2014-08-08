@@ -86,20 +86,22 @@ namespace Micspam
 				{
 					string extension = Path.GetExtension(file);
 					string name = Path.GetFileNameWithoutExtension(file);
-					string source = file;
 					string fullPath = Path.GetFullPath(file);
+					string source = Extensions.GetPartOfPathAfter(fullPath, Path.GetFileName(path));
 					string type = GetExtensionName(extension);
 					TimeSpan length = AudioLength.Get(fullPath);
 
-					AudioInfo info = new AudioInfo(index, name, fullPath, source, type, length);
+					//Console.WriteLine("\"{0}\", \"{1}\"", file, Path.GetFileName(path));
+
+					AudioInfo info = new AudioInfo(index, name, fullPath, file, type, length);
 					info.PopulateDevices(devices.ToArray());
 
 					ListViewItem item = new ListViewItem(new string[] {
 						"",
-						info.name,
-						info.length.ToString("%m\\:ss"),
-						info.type,
-						info.source
+						name,
+						length.ToString("%m\\:ss"),
+						type,
+						source
 					});
 					info.listItem = item;
 
