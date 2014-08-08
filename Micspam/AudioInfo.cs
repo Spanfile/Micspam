@@ -75,6 +75,34 @@ namespace Micspam
 				devices.Add(info.device, info.isDefault);
 		}
 
+		public void UpdateDeviceList(DeviceInfo[] deviceList)
+		{
+			Console.WriteLine("Updating device list for \"{0}\"", name);
+
+			var updated = new Dictionary<MMDevice, bool>();
+			List<MMDevice> devices = this.devices.Select(d => d.Key).ToList();
+
+			DeviceComparer comparer = new DeviceComparer();
+
+			foreach (DeviceInfo info in deviceList)
+			{
+				MMDevice existing = this.devices.Keys.First(d => comparer.Equals(d, info.device));
+				if (existing != null)
+				{
+					//Console.WriteLine("Existing device found (\"{0}\"), replacing and setting status to {1}", info.device.FriendlyName, GetDeviceStatus(existing));
+					updated.Add(info.device, GetDeviceStatus(existing));
+				}
+				else
+				{
+					//Console.WriteLine("New device (\"{0}\"), adding with status {1}", info.device.FriendlyName, info.isDefault);
+					updated.Add(info.device, info.isDefault);
+				}
+			}
+
+			Console.WriteLine("Updated from {0} devices to {1} devices", this.devices.Count, updated.Count);
+			this.devices = updated;
+		}
+
 		public MMDevice[] GetEnabledDevices()
 		{
 			return devices.Where(kvp => kvp.Value).Select(kvp => kvp.Key).ToArray(); // dat linq

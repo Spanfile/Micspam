@@ -57,6 +57,10 @@
 			this.menuSettingsChangeDirBrowse = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDirDefault = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsFindFromChildren = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsRefresh = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsRefreshDevices = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsRefreshExtensions = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuSettingsRefreshAudios = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnRefreshAudioList = new System.Windows.Forms.Button();
 			this.trackGlobalVolume = new System.Windows.Forms.TrackBar();
 			this.label2 = new System.Windows.Forms.Label();
@@ -66,10 +70,6 @@
 			this.lblAudioSourceDir = new System.Windows.Forms.Label();
 			this.lblGlobalVolumeValue = new System.Windows.Forms.Label();
 			this.btnStopAllAudios = new System.Windows.Forms.Button();
-			this.menuSettingsRefresh = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuSettingsRefreshDevices = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuSettingsRefreshExtensions = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuSettingsRefreshAudios = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupAudioSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackAudioVolume)).BeginInit();
 			this.menuMain.SuspendLayout();
@@ -324,14 +324,14 @@
 			// menuSettingsChangeDirBrowse
 			// 
 			this.menuSettingsChangeDirBrowse.Name = "menuSettingsChangeDirBrowse";
-			this.menuSettingsChangeDirBrowse.Size = new System.Drawing.Size(121, 22);
+			this.menuSettingsChangeDirBrowse.Size = new System.Drawing.Size(152, 22);
 			this.menuSettingsChangeDirBrowse.Text = "Browse...";
 			this.menuSettingsChangeDirBrowse.Click += new System.EventHandler(this.menuSettingsChangeDirBrowse_Click);
 			// 
 			// menuSettingsChangeDirDefault
 			// 
 			this.menuSettingsChangeDirDefault.Name = "menuSettingsChangeDirDefault";
-			this.menuSettingsChangeDirDefault.Size = new System.Drawing.Size(121, 22);
+			this.menuSettingsChangeDirDefault.Size = new System.Drawing.Size(152, 22);
 			this.menuSettingsChangeDirDefault.Text = "Default";
 			this.menuSettingsChangeDirDefault.Click += new System.EventHandler(this.menuSettingsChangeDirDefault_Click);
 			// 
@@ -344,6 +344,37 @@
 			this.menuSettingsFindFromChildren.Size = new System.Drawing.Size(251, 22);
 			this.menuSettingsFindFromChildren.Text = "Find sounds from source children";
 			this.menuSettingsFindFromChildren.Click += new System.EventHandler(this.menuSettingsFindFromChildren_Click);
+			// 
+			// menuSettingsRefresh
+			// 
+			this.menuSettingsRefresh.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsRefreshDevices,
+            this.menuSettingsRefreshExtensions,
+            this.menuSettingsRefreshAudios});
+			this.menuSettingsRefresh.Name = "menuSettingsRefresh";
+			this.menuSettingsRefresh.Size = new System.Drawing.Size(251, 22);
+			this.menuSettingsRefresh.Text = "Refresh...";
+			// 
+			// menuSettingsRefreshDevices
+			// 
+			this.menuSettingsRefreshDevices.Name = "menuSettingsRefreshDevices";
+			this.menuSettingsRefreshDevices.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsRefreshDevices.Text = "Devices";
+			this.menuSettingsRefreshDevices.Click += new System.EventHandler(this.menuSettingsRefreshDevices_Click);
+			// 
+			// menuSettingsRefreshExtensions
+			// 
+			this.menuSettingsRefreshExtensions.Name = "menuSettingsRefreshExtensions";
+			this.menuSettingsRefreshExtensions.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsRefreshExtensions.Text = "Extensions";
+			this.menuSettingsRefreshExtensions.Click += new System.EventHandler(this.menuSettingsRefreshExtensions_Click);
+			// 
+			// menuSettingsRefreshAudios
+			// 
+			this.menuSettingsRefreshAudios.Name = "menuSettingsRefreshAudios";
+			this.menuSettingsRefreshAudios.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsRefreshAudios.Text = "Audios";
+			this.menuSettingsRefreshAudios.Click += new System.EventHandler(this.menuSettingsRefreshAudios_Click);
 			// 
 			// btnRefreshAudioList
 			// 
@@ -456,37 +487,6 @@
 			this.btnStopAllAudios.Text = "Stop all audios";
 			this.btnStopAllAudios.UseVisualStyleBackColor = true;
 			this.btnStopAllAudios.Click += new System.EventHandler(this.btnStopAllAudios_Click);
-			// 
-			// menuSettingsRefresh
-			// 
-			this.menuSettingsRefresh.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSettingsRefreshDevices,
-            this.menuSettingsRefreshExtensions,
-            this.menuSettingsRefreshAudios});
-			this.menuSettingsRefresh.Name = "menuSettingsRefresh";
-			this.menuSettingsRefresh.Size = new System.Drawing.Size(251, 22);
-			this.menuSettingsRefresh.Text = "Refresh...";
-			// 
-			// menuSettingsRefreshDevices
-			// 
-			this.menuSettingsRefreshDevices.Name = "menuSettingsRefreshDevices";
-			this.menuSettingsRefreshDevices.Size = new System.Drawing.Size(152, 22);
-			this.menuSettingsRefreshDevices.Text = "Devices";
-			this.menuSettingsRefreshDevices.Click += new System.EventHandler(this.menuSettingsRefreshDevices_Click);
-			// 
-			// menuSettingsRefreshExtensions
-			// 
-			this.menuSettingsRefreshExtensions.Name = "menuSettingsRefreshExtensions";
-			this.menuSettingsRefreshExtensions.Size = new System.Drawing.Size(152, 22);
-			this.menuSettingsRefreshExtensions.Text = "Extensions";
-			this.menuSettingsRefreshExtensions.Click += new System.EventHandler(this.menuSettingsRefreshExtensions_Click);
-			// 
-			// menuSettingsRefreshAudios
-			// 
-			this.menuSettingsRefreshAudios.Name = "menuSettingsRefreshAudios";
-			this.menuSettingsRefreshAudios.Size = new System.Drawing.Size(152, 22);
-			this.menuSettingsRefreshAudios.Text = "Audios";
-			this.menuSettingsRefreshAudios.Click += new System.EventHandler(this.menuSettingsRefreshAudios_Click);
 			// 
 			// MainForm
 			// 

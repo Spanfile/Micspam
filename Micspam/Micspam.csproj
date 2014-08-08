@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioInfo.cs" />
+    <Compile Include="DeviceComparer.cs" />
     <Compile Include="DeviceInfo.cs" />
     <Compile Include="DevicesForm.cs">
       <SubType>Form</SubType>

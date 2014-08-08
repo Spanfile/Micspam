@@ -168,7 +168,7 @@ namespace Micspam
 					continue;
 				}
 
-				if (extensions.Select(t => t.Item1).Contains(type))
+				if (changes.Select(t => t.Item1).Contains(type))
 				{
 					Console.WriteLine("{0}: {1} is already added", index, type);
 					continue;
@@ -445,6 +445,8 @@ namespace Micspam
 		private void menuSettingsRefreshDevices_Click(object sender, EventArgs e)
 		{
 			RefreshDevices();
+			foreach (AudioInfo info in audioInfos)
+				info.UpdateDeviceList(deviceInfos.ToArray());
 		}
 
 		private void menuSettingsRefreshExtensions_Click(object sender, EventArgs e)
