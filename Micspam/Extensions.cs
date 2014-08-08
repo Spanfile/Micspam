@@ -29,7 +29,7 @@ namespace Micspam
 			if (startAfter == -1)
 				return null;
 
-			pathParts.RemoveRange(0, startAfter);
+			pathParts.RemoveRange(0, startAfter + 1);
 			return Path.Combine(pathParts.ToArray());
 		}
 	}
