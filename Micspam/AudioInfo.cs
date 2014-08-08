@@ -202,7 +202,7 @@ namespace Micspam
 			UpdateVolume();
 		}
 
-		private void UpdateVolume()
+		public void UpdateVolume()
 		{
 			if (Playing)
 				foreach (var audioOut in audioOuts)

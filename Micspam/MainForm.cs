@@ -210,6 +210,10 @@ namespace Micspam
 		private void PlayAudio(AudioInfo info)
 		{
 			info.Play();
+
+			// workaround to a cscore bug
+			foreach (AudioInfo i in GetPlayingAudios())
+				i.UpdateVolume();
 		}
 
 		private float UpdateGlobalVolume()

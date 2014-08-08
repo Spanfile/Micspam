@@ -21,6 +21,7 @@ namespace Micspam
 		}
 
 		// http://stackoverflow.com/questions/5283236/remove-part-of-the-full-directory-name
+		// based on that ^, edited to my needs
 		public static string GetPartOfPathAfter(string path, string after)
 		{
 			var pathParts = path.Split(Path.DirectorySeparatorChar).ToList();
