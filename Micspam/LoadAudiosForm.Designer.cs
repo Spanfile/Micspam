@@ -37,7 +37,7 @@
 			// lblCurrent
 			// 
 			this.lblCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCurrent.AutoEllipsis = true;
 			this.lblCurrent.Location = new System.Drawing.Point(12, 13);
 			this.lblCurrent.Name = "lblCurrent";
@@ -48,10 +48,11 @@
 			// progressLoadProg
 			// 
 			this.progressLoadProg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.progressLoadProg.Location = new System.Drawing.Point(12, 29);
 			this.progressLoadProg.Name = "progressLoadProg";
 			this.progressLoadProg.Size = new System.Drawing.Size(384, 21);
+			this.progressLoadProg.Step = 1;
 			this.progressLoadProg.TabIndex = 1;
 			// 
 			// btnCancel
@@ -64,6 +65,7 @@
 			this.btnCancel.TabIndex = 2;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// lblTime
 			// 
@@ -89,7 +91,6 @@
 			this.Name = "LoadAudiosForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Loading audios";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoadAudiosForm_FormClosing);
 			this.Shown += new System.EventHandler(this.LoadAudiosForm_Shown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
