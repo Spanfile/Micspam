@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+using CSCore.CoreAudioAPI;
+
 namespace Micspam
 {
 	public static class Extensions
@@ -18,6 +20,16 @@ namespace Micspam
 		public static List<ListViewItem> GetSelectedItems(this ListView list)
 		{
 			return list.SelectedItems.Cast<ListViewItem>().ToList();
+		}
+
+		public static string[] Split(this string str, string separator, StringSplitOptions options)
+		{
+			return str.Split(new string[] { separator }, options);
+		}
+
+		public static bool Is(this MMDevice device, MMDevice that)
+		{
+			return device.FriendlyName == that.FriendlyName;
 		}
 
 		// http://stackoverflow.com/questions/5283236/remove-part-of-the-full-directory-name

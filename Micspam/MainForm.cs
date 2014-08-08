@@ -52,6 +52,7 @@ namespace Micspam
 			deviceInfos.Clear();
 
 			Console.WriteLine("Refreshing devices");
+			Dictionary<string, bool> deviceSettings = LoadDeviceSettings();
 			using (MMDeviceEnumerator enumerator = new MMDeviceEnumerator())
 			{
 				defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
@@ -63,7 +64,15 @@ namespace Micspam
 					{
 						DeviceInfo info = new DeviceInfo(device);
 
-						if (device.FriendlyName == defaultDevice.FriendlyName)
+						if (deviceSettings.ContainsKey(device.FriendlyName))
+						{
+							if (device.Is(defaultDevice))
+								info.enabled = true;
+							else
+								info.enabled = deviceSettings[device.FriendlyName];
+						}
+
+						if (device.Is(defaultDevice))
 							info.isDefault = true;
 
 						deviceInfos.Add(info);
@@ -73,6 +82,76 @@ namespace Micspam
 			}
 
 			Console.WriteLine("Found {0} devices", deviceInfos.Count);
+		}
+
+		private Dictionary<string, bool> LoadDeviceSettings()
+		{
+			Dictionary<string, bool> settings = new Dictionary<string, bool>();
+
+			if (!File.Exists("devicesettings.txt"))
+			{
+				Console.WriteLine("\"devicesettings.txt\" not found");
+				return settings;
+			}
+
+			Console.WriteLine("Loading device settings from \"devicesettings.txt\"");
+			var lines = File.ReadLines("devicesettings.txt");
+			int index = 0;
+			int loaded = 0;
+			foreach (string line in lines)
+			{
+				index += 1; // index is incremented at start to make sure it increments at every iteration
+
+				if (line.Trim() == "")
+					continue;
+
+				string[] args = line.Split(":", StringSplitOptions.RemoveEmptyEntries);
+
+				if (args.Length < 2)
+				{
+					Console.WriteLine("{0}: invalid amount of arguments", index);
+					continue;
+				}
+
+				string name = args[0];
+				bool state = false;
+
+				if (!Boolean.TryParse(args[1], out state))
+				{
+					Console.WriteLine("{0}: invalid device state: {1}", index, args[1]);
+					continue;
+				}
+
+				settings.Add(name, state);
+				loaded += 1;
+			}
+
+			if (loaded == 0)
+			{
+				Console.WriteLine("No device settings loaded");
+				return settings;
+			}
+
+			Console.WriteLine("{0} device settings loaded", loaded);
+			return settings;
+		}
+
+		private void SaveDeviceSettings()
+		{
+			if (!File.Exists("devicesettings.txt"))
+			{
+				Console.WriteLine("\"devicesettings.txt\" not found");
+				return;
+			}
+
+			Console.WriteLine("Saving device settings to \"devicesettings.txt\"");
+			List<string> lines = new List<string>();
+			foreach (DeviceInfo info in deviceInfos)
+				lines.Add(String.Format("{0}:{1}", info.device.FriendlyName, info.enabled.ToString()));
+
+			File.WriteAllLines("devicesettings.txt", lines);
+
+			Console.WriteLine("{0} lines written", lines.Count);
 		}
 
 		private void RefreshAudioList()
@@ -141,6 +220,7 @@ namespace Micspam
 				return;
 			}
 
+			Console.WriteLine("Loading accepted extensions from \"extensions.txt\"");
 			var lines = File.ReadLines("extensions.txt");
 			int index = 0;
 			int loaded = 0;
@@ -151,7 +231,7 @@ namespace Micspam
 				if (line.StartsWith("#") || line.Trim() == "") // comments and blank lines are ignored
 					continue;
 
-				string[] args = line.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+				string[] args = line.Split(";", StringSplitOptions.RemoveEmptyEntries);
 
 				if (args.Length < 2)
 				{
@@ -359,7 +439,7 @@ namespace Micspam
 			foreach (ListViewItem item in listAudioOutputDevices.Items)
 			{
 				MMDevice device = item.Tag as MMDevice;
-				item.Checked = device.FriendlyName == defaultDevice.FriendlyName;
+				item.Checked = device.Is(defaultDevice);
 			}
 		}
 
@@ -414,7 +494,9 @@ namespace Micspam
 			{
 				deviceInfos = form.GetDeviceList();
 				Console.WriteLine("Device list updated");
+
 				PrintDeviceList();
+				SaveDeviceSettings();
 			}
 		}
 
