@@ -93,7 +93,7 @@ namespace Micspam
 
 					//Console.WriteLine("\"{0}\", \"{1}\"", file, Path.GetFileName(path));
 
-					AudioInfo info = new AudioInfo(index, name, fullPath, file, type, length);
+					AudioInfo info = new AudioInfo(index, name, fullPath, type, length);
 					info.PopulateDevices(devices.ToArray());
 
 					ListViewItem item = new ListViewItem(new string[] {

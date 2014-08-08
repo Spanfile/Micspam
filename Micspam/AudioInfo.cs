@@ -52,12 +52,11 @@ namespace Micspam
 			}
 		}
 
-		public AudioInfo(int index, string name, string source, string friendlySource, string type, TimeSpan length)
+		public AudioInfo(int index, string name, string source, string type, TimeSpan length)
 		{
 			this.index = index;
 			this.name = name;
 			this.source = source;
-			this.friendlySource = friendlySource;
 			this.type = type;
 			this.length = length;
 
