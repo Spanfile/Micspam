@@ -151,7 +151,7 @@ namespace Micspam
 				if (line.StartsWith("#") || line.Trim() == "") // comments and blank lines are ignored
 					continue;
 
-				string[] args = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+				string[] args = line.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
 				if (args.Length < 2)
 				{
@@ -213,7 +213,8 @@ namespace Micspam
 
 			// workaround to a cscore bug
 			foreach (AudioInfo i in GetPlayingAudios())
-				i.UpdateVolume();
+				if (!i.Equals(info))
+					i.UpdateVolume();
 		}
 
 		private float UpdateGlobalVolume()
@@ -461,6 +462,13 @@ namespace Micspam
 		private void menuSettingsRefreshAudios_Click(object sender, EventArgs e)
 		{
 			RefreshAudioList();
+		}
+
+		private void acceptedExtensionsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AcceptedExtensionsForm form = new AcceptedExtensionsForm();
+			form.PopulateExtensionList(extensions.ToArray());
+			form.ShowDialog(this);
 		}
 	}
 }
