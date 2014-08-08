@@ -79,14 +79,14 @@
 			// listAudios
 			// 
 			this.listAudios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.listAudios.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnAudioPlaying,
-            this.columnAudioName,
-            this.columnAudioLength,
-            this.columnAudioType,
-            this.columnAudioSource});
+			this.columnAudioPlaying,
+			this.columnAudioName,
+			this.columnAudioLength,
+			this.columnAudioType,
+			this.columnAudioSource});
 			this.listAudios.FullRowSelect = true;
 			this.listAudios.GridLines = true;
 			this.listAudios.HideSelection = false;
@@ -134,8 +134,8 @@
 			// groupAudioSettings
 			// 
 			this.groupAudioSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupAudioSettings.Controls.Add(this.lblAudioLength);
 			this.groupAudioSettings.Controls.Add(this.progAudioPos);
 			this.groupAudioSettings.Controls.Add(this.lblAudioPosition);
@@ -160,14 +160,14 @@
 			this.lblAudioLength.AutoSize = true;
 			this.lblAudioLength.Location = new System.Drawing.Point(241, 275);
 			this.lblAudioLength.Name = "lblAudioLength";
-			this.lblAudioLength.Size = new System.Drawing.Size(25, 13);
+			this.lblAudioLength.Size = new System.Drawing.Size(28, 13);
 			this.lblAudioLength.TabIndex = 9;
-			this.lblAudioLength.Text = "Len";
+			this.lblAudioLength.Text = "0:00";
 			// 
 			// progAudioPos
 			// 
 			this.progAudioPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.progAudioPos.Location = new System.Drawing.Point(37, 275);
 			this.progAudioPos.Name = "progAudioPos";
 			this.progAudioPos.Size = new System.Drawing.Size(198, 14);
@@ -179,9 +179,9 @@
 			this.lblAudioPosition.AutoSize = true;
 			this.lblAudioPosition.Location = new System.Drawing.Point(6, 275);
 			this.lblAudioPosition.Name = "lblAudioPosition";
-			this.lblAudioPosition.Size = new System.Drawing.Size(25, 13);
+			this.lblAudioPosition.Size = new System.Drawing.Size(28, 13);
 			this.lblAudioPosition.TabIndex = 7;
-			this.lblAudioPosition.Text = "Pos";
+			this.lblAudioPosition.Text = "0:00";
 			// 
 			// lblAudioVolumeValue
 			// 
@@ -217,7 +217,7 @@
 			// trackAudioVolume
 			// 
 			this.trackAudioVolume.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.trackAudioVolume.AutoSize = false;
 			this.trackAudioVolume.Location = new System.Drawing.Point(6, 246);
 			this.trackAudioVolume.Maximum = 100;
@@ -242,8 +242,8 @@
 			// listAudioOutputDevices
 			// 
 			this.listAudioOutputDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.listAudioOutputDevices.CheckBoxes = true;
 			this.listAudioOutputDevices.FullRowSelect = true;
 			this.listAudioOutputDevices.Location = new System.Drawing.Point(6, 37);
@@ -267,8 +267,8 @@
 			// menuMain
 			// 
 			this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuView,
-            this.menuSettings});
+			this.menuView,
+			this.menuSettings});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Size = new System.Drawing.Size(793, 24);
@@ -278,8 +278,8 @@
 			// menuView
 			// 
 			this.menuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuViewOutputDevices,
-            this.menuViewAudioDir});
+			this.menuViewOutputDevices,
+			this.menuViewAudioDir});
 			this.menuView.Name = "menuView";
 			this.menuView.Size = new System.Drawing.Size(44, 20);
 			this.menuView.Text = "View";
@@ -301,8 +301,8 @@
 			// menuSettings
 			// 
 			this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSettingsChangeDir,
-            this.menuSettingsFindFromChildren});
+			this.menuSettingsChangeDir,
+			this.menuSettingsFindFromChildren});
 			this.menuSettings.Name = "menuSettings";
 			this.menuSettings.Size = new System.Drawing.Size(61, 20);
 			this.menuSettings.Text = "Settings";
@@ -310,8 +310,8 @@
 			// menuSettingsChangeDir
 			// 
 			this.menuSettingsChangeDir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSettingsChangeDirBrowse,
-            this.menuSettingsChangeDirDefault});
+			this.menuSettingsChangeDirBrowse,
+			this.menuSettingsChangeDirDefault});
 			this.menuSettingsChangeDir.Name = "menuSettingsChangeDir";
 			this.menuSettingsChangeDir.Size = new System.Drawing.Size(251, 22);
 			this.menuSettingsChangeDir.Text = "Change source directory";
@@ -376,8 +376,8 @@
 			// splitMain
 			// 
 			this.splitMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.splitMain.Location = new System.Drawing.Point(13, 28);
 			this.splitMain.Name = "splitMain";
 			// 
@@ -413,7 +413,7 @@
 			// textAudioFilter
 			// 
 			this.textAudioFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.textAudioFilter.Location = new System.Drawing.Point(38, 304);
 			this.textAudioFilter.Name = "textAudioFilter";
 			this.textAudioFilter.Size = new System.Drawing.Size(435, 20);
@@ -423,7 +423,7 @@
 			// lblAudioSourceDir
 			// 
 			this.lblAudioSourceDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblAudioSourceDir.AutoEllipsis = true;
 			this.lblAudioSourceDir.Location = new System.Drawing.Point(3, 34);
 			this.lblAudioSourceDir.Name = "lblAudioSourceDir";
