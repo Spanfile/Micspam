@@ -11,7 +11,7 @@ Supported formats
 * MP3 (.mp3)
 * Waveform (.wav)
 * Most AAC formats
+* FLAC
 
 The following formats are a big maybe. CSCore says it can load these but they may still cause problems.
 * AAC formats that also include video (like .mp4)
-* FLAC
