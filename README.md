@@ -12,6 +12,6 @@ Supported formats
 * Waveform (.wav)
 * Most AAC formats
 
-The following formats are a big maybe. The app should be able to load these but they may not work properly.
+The following formats are a big maybe. CSCore says it can load these but they may still cause problems.
 * AAC formats that also include video (like .mp4)
 * FLAC
