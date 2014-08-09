@@ -20,6 +20,8 @@ namespace Micspam
 {
 	public partial class MainForm : Form
 	{
+		public const string DeviceSettingsFile = "devicesettings.txt";
+
 		string audioSourceDir = "sources";
 		bool searchChildren = true;
 
@@ -88,14 +90,15 @@ namespace Micspam
 		{
 			Dictionary<string, bool> settings = new Dictionary<string, bool>();
 
-			if (!File.Exists("devicesettings.txt"))
+			Console.WriteLine("Attempting to load device settings from \"{0}\"", DeviceSettingsFile);
+
+			if (!File.Exists(DeviceSettingsFile))
 			{
-				Console.WriteLine("\"devicesettings.txt\" not found");
-				return settings;
+				Console.WriteLine("\"{0}\" not found, creating", DeviceSettingsFile);
+				File.Create(DeviceSettingsFile);
 			}
 
-			Console.WriteLine("Loading device settings from \"devicesettings.txt\"");
-			var lines = File.ReadLines("devicesettings.txt");
+			var lines = File.ReadLines(DeviceSettingsFile);
 			int index = 0;
 			int loaded = 0;
 			foreach (string line in lines)
@@ -138,18 +141,12 @@ namespace Micspam
 
 		private void SaveDeviceSettings()
 		{
-			if (!File.Exists("devicesettings.txt"))
-			{
-				Console.WriteLine("\"devicesettings.txt\" not found");
-				return;
-			}
-
-			Console.WriteLine("Saving device settings to \"devicesettings.txt\"");
+			Console.WriteLine("Saving device settings to \"{0}\"", DeviceSettingsFile);
 			List<string> lines = new List<string>();
 			foreach (DeviceInfo info in deviceInfos)
 				lines.Add(String.Format("{0}:{1}", info.device.FriendlyName, info.enabled.ToString()));
 
-			File.WriteAllLines("devicesettings.txt", lines);
+			File.WriteAllLines(DeviceSettingsFile, lines);
 
 			Console.WriteLine("{0} lines written", lines.Count);
 		}
