@@ -190,14 +190,14 @@ namespace Micspam
 
 		public void SetVolume(float volume)
 		{
-			Console.WriteLine("Volume set to {0:0.00} (before: {1:0.00}) for \"{2}\"", volume, this.volume, name);
+			//Console.WriteLine("Volume set to {0:0.00} (before: {1:0.00}) for \"{2}\"", volume, this.volume, name);
 			this.volume = volume;
 			UpdateVolume();
 		}
 
 		public void SetMasterVolume(float volume)
 		{
-			Console.WriteLine("Master volume set to {0} (before: {1}) for \"{2}\"", volume, this.masterVolume, name);
+			//Console.WriteLine("Master volume set to {0} (before: {1}) for \"{2}\"", volume, this.masterVolume, name);
 			this.masterVolume = volume;
 			UpdateVolume();
 		}
@@ -207,7 +207,7 @@ namespace Micspam
 			if (Playing)
 				foreach (var audioOut in audioOuts)
 				{
-					Console.WriteLine("Setting audio volume from {0:0.00} to {1:0.00} (\"{2}\")", audioOut.Item1.Volume, GetVolume(), name);
+					//Console.WriteLine("Setting audio volume from {0:0.00} to {1:0.00} (\"{2}\")", audioOut.Item1.Volume, GetVolume(), name);
 					audioOut.Item1.Volume = GetVolume();
 				}
 		}
