@@ -52,6 +52,7 @@
 			this.menuView = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewOutputDevices = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewAudioDir = new System.Windows.Forms.ToolStripMenuItem();
+			this.acceptedExtensionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDir = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDirBrowse = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +71,6 @@
 			this.lblAudioSourceDir = new System.Windows.Forms.Label();
 			this.lblGlobalVolumeValue = new System.Windows.Forms.Label();
 			this.btnStopAllAudios = new System.Windows.Forms.Button();
-			this.acceptedExtensionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupAudioSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackAudioVolume)).BeginInit();
 			this.menuMain.SuspendLayout();
@@ -304,6 +304,13 @@
 			this.menuViewAudioDir.Text = "Audio source directory";
 			this.menuViewAudioDir.Click += new System.EventHandler(this.menuViewAudioDir_Click);
 			// 
+			// acceptedExtensionsToolStripMenuItem
+			// 
+			this.acceptedExtensionsToolStripMenuItem.Name = "acceptedExtensionsToolStripMenuItem";
+			this.acceptedExtensionsToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.acceptedExtensionsToolStripMenuItem.Text = "Accepted extensions";
+			this.acceptedExtensionsToolStripMenuItem.Click += new System.EventHandler(this.acceptedExtensionsToolStripMenuItem_Click);
+			// 
 			// menuSettings
 			// 
 			this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -326,14 +333,14 @@
 			// menuSettingsChangeDirBrowse
 			// 
 			this.menuSettingsChangeDirBrowse.Name = "menuSettingsChangeDirBrowse";
-			this.menuSettingsChangeDirBrowse.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsChangeDirBrowse.Size = new System.Drawing.Size(121, 22);
 			this.menuSettingsChangeDirBrowse.Text = "Browse...";
 			this.menuSettingsChangeDirBrowse.Click += new System.EventHandler(this.menuSettingsChangeDirBrowse_Click);
 			// 
 			// menuSettingsChangeDirDefault
 			// 
 			this.menuSettingsChangeDirDefault.Name = "menuSettingsChangeDirDefault";
-			this.menuSettingsChangeDirDefault.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsChangeDirDefault.Size = new System.Drawing.Size(121, 22);
 			this.menuSettingsChangeDirDefault.Text = "Default";
 			this.menuSettingsChangeDirDefault.Click += new System.EventHandler(this.menuSettingsChangeDirDefault_Click);
 			// 
@@ -360,21 +367,21 @@
 			// menuSettingsRefreshDevices
 			// 
 			this.menuSettingsRefreshDevices.Name = "menuSettingsRefreshDevices";
-			this.menuSettingsRefreshDevices.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsRefreshDevices.Size = new System.Drawing.Size(129, 22);
 			this.menuSettingsRefreshDevices.Text = "Devices";
 			this.menuSettingsRefreshDevices.Click += new System.EventHandler(this.menuSettingsRefreshDevices_Click);
 			// 
 			// menuSettingsRefreshExtensions
 			// 
 			this.menuSettingsRefreshExtensions.Name = "menuSettingsRefreshExtensions";
-			this.menuSettingsRefreshExtensions.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsRefreshExtensions.Size = new System.Drawing.Size(129, 22);
 			this.menuSettingsRefreshExtensions.Text = "Extensions";
 			this.menuSettingsRefreshExtensions.Click += new System.EventHandler(this.menuSettingsRefreshExtensions_Click);
 			// 
 			// menuSettingsRefreshAudios
 			// 
 			this.menuSettingsRefreshAudios.Name = "menuSettingsRefreshAudios";
-			this.menuSettingsRefreshAudios.Size = new System.Drawing.Size(152, 22);
+			this.menuSettingsRefreshAudios.Size = new System.Drawing.Size(129, 22);
 			this.menuSettingsRefreshAudios.Text = "Audios";
 			this.menuSettingsRefreshAudios.Click += new System.EventHandler(this.menuSettingsRefreshAudios_Click);
 			// 
@@ -489,13 +496,6 @@
 			this.btnStopAllAudios.Text = "Stop all audios";
 			this.btnStopAllAudios.UseVisualStyleBackColor = true;
 			this.btnStopAllAudios.Click += new System.EventHandler(this.btnStopAllAudios_Click);
-			// 
-			// acceptedExtensionsToolStripMenuItem
-			// 
-			this.acceptedExtensionsToolStripMenuItem.Name = "acceptedExtensionsToolStripMenuItem";
-			this.acceptedExtensionsToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.acceptedExtensionsToolStripMenuItem.Text = "Accepted extensions";
-			this.acceptedExtensionsToolStripMenuItem.Click += new System.EventHandler(this.acceptedExtensionsToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 

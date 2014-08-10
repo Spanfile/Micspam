@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 using CSCore.SoundOut;
 using CSCore.CoreAudioAPI;
@@ -76,7 +77,7 @@ namespace Micspam
 
 		public void UpdateDeviceList(DeviceInfo[] deviceList)
 		{
-			Console.WriteLine("Updating device list for \"{0}\"", name);
+			Trace.WriteLine(String.Format("Updating device list for \"{0}\"", name));
 
 			var updated = new Dictionary<MMDevice, bool>();
 			List<MMDevice> devices = this.devices.Select(d => d.Key).ToList();
@@ -88,17 +89,17 @@ namespace Micspam
 				MMDevice existing = this.devices.Keys.First(d => comparer.Equals(d, info.device));
 				if (existing != null)
 				{
-					//Console.WriteLine("Existing device found (\"{0}\"), replacing and setting status to {1}", info.device.FriendlyName, GetDeviceStatus(existing));
+					//Trace.WriteLine(String.Format("Existing device found (\"{0}\"), replacing and setting status to {1}", info.device.FriendlyName, GetDeviceStatus(existing));
 					updated.Add(info.device, GetDeviceStatus(existing));
 				}
 				else
 				{
-					//Console.WriteLine("New device (\"{0}\"), adding with status {1}", info.device.FriendlyName, info.isDefault);
+					//Trace.WriteLine(String.Format("New device (\"{0}\"), adding with status {1}", info.device.FriendlyName, info.isDefault);
 					updated.Add(info.device, info.isDefault);
 				}
 			}
 
-			Console.WriteLine("Updated from {0} devices to {1} devices", this.devices.Count, updated.Count);
+			Trace.WriteLine(String.Format("Updated from {0} devices to {1} devices", this.devices.Count, updated.Count));
 			this.devices = updated;
 		}
 
@@ -110,7 +111,7 @@ namespace Micspam
 		public void SetDeviceStatus(MMDevice device, bool status)
 		{
 			devices[device] = status;
-			//Console.WriteLine("Audio \"{0}\" device \"{1}\" status: {2}", name, device.FriendlyName, status);
+			//Trace.WriteLine(String.Format("Audio \"{0}\" device \"{1}\" status: {2}", name, device.FriendlyName, status);
 		}
 
 		public bool GetDeviceStatus(MMDevice device)
@@ -121,7 +122,7 @@ namespace Micspam
 		public async void Play()
 		{
 			MMDevice[] playDevices = GetEnabledDevices();
-			Console.WriteLine("Playing \"{0}\" with volume {1:0.00} on devices: {2}", name, GetVolume(), String.Join<string>(", ", playDevices.Select(d => d.FriendlyName)));
+			Trace.WriteLine(String.Format("Playing \"{0}\" with volume {1:0.00} on devices: {2}", name, GetVolume(), String.Join<string>(", ", playDevices.Select(d => d.FriendlyName))));
 
 			List<ManualResetEvent> mres = new List<ManualResetEvent>();
 
@@ -129,7 +130,7 @@ namespace Micspam
 			{
 				WasapiOut audioOut = new WasapiOut();
 				IWaveSource source = CodecFactory.Instance.GetCodec(this.source);
-				Console.WriteLine("Source format: {0}", source.WaveFormat.ToString());
+				Trace.WriteLine(String.Format("Source format: {0}", source.WaveFormat.ToString()));
 
 				audioOut.Device = device;
 				audioOut.Initialize(source);
@@ -143,7 +144,7 @@ namespace Micspam
 					source.Dispose();
 
 					mre.Set();
-					Console.WriteLine("\"{0}\" stopped on device \"{1}\"", name, device.FriendlyName);
+					Trace.WriteLine(String.Format("\"{0}\" stopped on device \"{1}\"", name, device.FriendlyName));
 				};
 
 				audioOuts.Add(new Tuple<WasapiOut, IWaveSource>(audioOut, source));
@@ -151,7 +152,7 @@ namespace Micspam
 				audioOut.Play();
 			}
 
-			Console.WriteLine("Waiting for all ({0}) events to trigger", mres.Count);
+			Trace.WriteLine(String.Format("Waiting for all ({0}) events to trigger", mres.Count));
 
 			await Task.Run(() =>
 			{
@@ -164,7 +165,7 @@ namespace Micspam
 				}
 			});
 
-			Console.WriteLine("\"{0}\" stopped", name);
+			Trace.WriteLine(String.Format("\"{0}\" stopped", name));
 			audioOuts.Clear();
 			if (Stopped != null)
 				Stopped(this, EventArgs.Empty);
@@ -177,7 +178,7 @@ namespace Micspam
 
 			audioOuts.Clear();
 
-			Console.WriteLine("\"{0}\" forcefully stopped", name);
+			Trace.WriteLine(String.Format("\"{0}\" forcefully stopped", name));
 		}
 
 		public TimeSpan GetPosition()
@@ -190,14 +191,14 @@ namespace Micspam
 
 		public void SetVolume(float volume)
 		{
-			//Console.WriteLine("Volume set to {0:0.00} (before: {1:0.00}) for \"{2}\"", volume, this.volume, name);
+			//Trace.WriteLine(String.Format("Volume set to {0:0.00} (before: {1:0.00}) for \"{2}\"", volume, this.volume, name);
 			this.volume = volume;
 			UpdateVolume();
 		}
 
 		public void SetMasterVolume(float volume)
 		{
-			//Console.WriteLine("Master volume set to {0} (before: {1}) for \"{2}\"", volume, this.masterVolume, name);
+			//Trace.WriteLine(String.Format("Master volume set to {0} (before: {1}) for \"{2}\"", volume, this.masterVolume, name);
 			this.masterVolume = volume;
 			UpdateVolume();
 		}
@@ -207,7 +208,7 @@ namespace Micspam
 			if (Playing)
 				foreach (var audioOut in audioOuts)
 				{
-					//Console.WriteLine("Setting audio volume from {0:0.00} to {1:0.00} (\"{2}\")", audioOut.Item1.Volume, GetVolume(), name);
+					//Trace.WriteLine(String.Format("Setting audio volume from {0:0.00} to {1:0.00} (\"{2}\")", audioOut.Item1.Volume, GetVolume(), name);
 					audioOut.Item1.Volume = GetVolume();
 				}
 		}
