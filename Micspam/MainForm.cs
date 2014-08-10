@@ -53,12 +53,12 @@ namespace Micspam
 		{
 			deviceInfos.Clear();
 
-			Trace.WriteLine(String.Format("Refreshing devices"));
+			Log.WriteLine("Refreshing devices");
 			Dictionary<string, bool> deviceSettings = LoadDeviceSettings();
 			using (MMDeviceEnumerator enumerator = new MMDeviceEnumerator())
 			{
 				defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-				Trace.WriteLine(String.Format("Default device is \"{0}\"", defaultDevice.FriendlyName));
+				Log.WriteLine("Default device is \"{0}\"", defaultDevice.FriendlyName);
 
 				using (MMDeviceCollection deviceCollection = enumerator.EnumAudioEndpoints(DataFlow.Render, DeviceState.Active))
 				{
@@ -78,23 +78,23 @@ namespace Micspam
 							info.isDefault = true;
 
 						deviceInfos.Add(info);
-						Trace.WriteLine(String.Format("Adding \"{0}\"", device.FriendlyName));
+						Log.WriteLine("Adding \"{0}\"", device.FriendlyName);
 					}
 				}
 			}
 
-			Trace.WriteLine(String.Format("Found {0} devices", deviceInfos.Count));
+			Log.WriteLine("Found {0} devices", deviceInfos.Count);
 		}
 
 		private Dictionary<string, bool> LoadDeviceSettings()
 		{
 			Dictionary<string, bool> settings = new Dictionary<string, bool>();
 
-			Trace.WriteLine(String.Format("Attempting to load device settings from \"{0}\"", DeviceSettingsFile));
+			Log.WriteLine("Attempting to load device settings from \"{0}\"", DeviceSettingsFile);
 
 			if (!File.Exists(DeviceSettingsFile))
 			{
-				Trace.WriteLine(String.Format("\"{0}\" not found, creating", DeviceSettingsFile));
+				Log.WriteLine("\"{0}\" not found, creating", DeviceSettingsFile);
 				File.Create(DeviceSettingsFile);
 			}
 
@@ -112,7 +112,7 @@ namespace Micspam
 
 				if (args.Length < 2)
 				{
-					Trace.WriteLine(String.Format("{0}: invalid amount of arguments", index));
+					Log.WriteLine("{0}: invalid amount of arguments", index);
 					continue;
 				}
 
@@ -121,7 +121,7 @@ namespace Micspam
 
 				if (!Boolean.TryParse(args[1], out state))
 				{
-					Trace.WriteLine(String.Format("{0}: invalid device state: {1}", index, args[1]));
+					Log.WriteLine("{0}: invalid device state: {1}", index, args[1]);
 					continue;
 				}
 
@@ -131,24 +131,24 @@ namespace Micspam
 
 			if (loaded == 0)
 			{
-				Trace.WriteLine(String.Format("No device settings loaded"));
+				Log.WriteLine("No device settings loaded");
 				return settings;
 			}
 
-			Trace.WriteLine(String.Format("{0} device settings loaded", loaded));
+			Log.WriteLine("{0} device settings loaded", loaded);
 			return settings;
 		}
 
 		private void SaveDeviceSettings()
 		{
-			Trace.WriteLine(String.Format("Saving device settings to \"{0}\"", DeviceSettingsFile));
+			Log.WriteLine("Saving device settings to \"{0}\"", DeviceSettingsFile);
 			List<string> lines = new List<string>();
 			foreach (DeviceInfo info in deviceInfos)
 				lines.Add(String.Format("{0}:{1}", info.device.FriendlyName, info.enabled.ToString()));
 
 			File.WriteAllLines(DeviceSettingsFile, lines);
 
-			Trace.WriteLine(String.Format("{0} lines written", lines.Count));
+			Log.WriteLine("{0} lines written", lines.Count);
 		}
 
 		private void RefreshAudioList()
@@ -160,7 +160,7 @@ namespace Micspam
 			LoadAudiosForm form = new LoadAudiosForm(audioSourceDir, searchChildren, deviceInfos, extensions);
 			if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.Cancel)
 			{
-				Trace.WriteLine(String.Format("Audio loading cancelled by user"));
+				Log.WriteLine("Audio loading cancelled by user");
 				return;
 			}
 
@@ -172,7 +172,7 @@ namespace Micspam
 					ListViewItem infoItem = info.listItem;
 					if (infoItem == null)
 					{
-						Trace.WriteLine(String.Format("Something went wrong; the list item tied to the audio isn't there!"));
+						Log.WriteLine("Something went wrong; the list item tied to the audio isn't there!");
 						return;
 					}
 
@@ -192,7 +192,7 @@ namespace Micspam
 				info.PositionUpdate += (s, e) =>
 				{
 					// best log message
-					//Trace.WriteLine(String.Format("HEY YO! {0} JUST UPDATED! IT SAYS IT'S POSITION IS {1}!", info.name, e.Position.ToString("%m\\:ss\\.fff"));
+					//Log.WriteLine("HEY YO! {0} JUST UPDATED! IT SAYS IT'S POSITION IS {1}!", info.name, e.Position.ToString("%m\\:ss\\.fff"));
 
 					if (this.InvokeRequired)
 						this.Invoke(updateAudioProgress, info);
@@ -217,7 +217,7 @@ namespace Micspam
 				return;
 			}
 
-			Trace.WriteLine(String.Format("Loading accepted extensions from \"extensions.txt\""));
+			Log.WriteLine("Loading accepted extensions from \"extensions.txt\"");
 			var lines = File.ReadLines("extensions.txt");
 			int index = 0;
 			int loaded = 0;
@@ -232,7 +232,7 @@ namespace Micspam
 
 				if (args.Length < 2)
 				{
-					Trace.WriteLine(String.Format("{0}: invalid amount of arguments", index));
+					Log.WriteLine("{0}: invalid amount of arguments", index);
 					continue;
 				}
 
@@ -241,18 +241,18 @@ namespace Micspam
 
 				if (!type.StartsWith("."))
 				{
-					Trace.WriteLine(String.Format("{0}: {1} isn't a valid type", index, type));
+					Log.WriteLine("{0}: {1} isn't a valid type", index, type);
 					continue;
 				}
 
 				if (changes.Select(t => t.Item1).Contains(type))
 				{
-					Trace.WriteLine(String.Format("{0}: {1} is already added", index, type));
+					Log.WriteLine("{0}: {1} is already added", index, type);
 					continue;
 				}
 
 				changes.Add(new Tuple<string, string>(type, name));
-				Trace.WriteLine(String.Format("Added extension: {0} ({1})", type, name));
+				Log.WriteLine("Added extension: {0} ({1})", type, name);
 				loaded += 1;
 			}
 
@@ -265,7 +265,7 @@ namespace Micspam
 			extensions.Clear();
 			extensions.AddRange(changes);
 
-			Trace.WriteLine(String.Format("Loaded {0} extensions", loaded));
+			Log.WriteLine("Loaded {0} extensions", loaded);
 		}
 
 		private void FilterAudioList(string filter)
@@ -361,7 +361,7 @@ namespace Micspam
 		private void PrintDeviceList()
 		{
 			foreach (DeviceInfo info in deviceInfos)
-				Trace.WriteLine(String.Format("\"{0}\": {1}", info.device.FriendlyName, info.enabled));
+				Log.WriteLine("\"{0}\": {1}", info.device.FriendlyName, info.enabled);
 		}
 
 		private AudioInfo GetAudioInfoOf(ListViewItem item)
@@ -410,7 +410,7 @@ namespace Micspam
 			groupAudioSettings.Text = info.name;
 
 			UpdateAudioSettingsPanel(info);
-			//Trace.WriteLine(String.Format((listAudios.SelectedItems[0].Tag as AudioInfo).Playing);
+			//Log.WriteLine((listAudios.SelectedItems[0].Tag as AudioInfo).Playing);
 
 			trackAudioVolume.Value = (int)(info.volume * 100);
 			lblAudioLength.Text = info.length.ToString("%m\\:ss");
@@ -490,7 +490,7 @@ namespace Micspam
 			if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
 				deviceInfos = form.GetDeviceList();
-				Trace.WriteLine(String.Format("Device list updated"));
+				Log.WriteLine("Device list updated");
 
 				PrintDeviceList();
 				SaveDeviceSettings();

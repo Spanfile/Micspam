@@ -71,6 +71,8 @@
 			this.lblAudioSourceDir = new System.Windows.Forms.Label();
 			this.lblGlobalVolumeValue = new System.Windows.Forms.Label();
 			this.btnStopAllAudios = new System.Windows.Forms.Button();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.debugLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupAudioSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackAudioVolume)).BeginInit();
 			this.menuMain.SuspendLayout();
@@ -285,7 +287,9 @@
 			this.menuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuViewOutputDevices,
             this.menuViewAudioDir,
-            this.acceptedExtensionsToolStripMenuItem});
+            this.acceptedExtensionsToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.debugLogToolStripMenuItem});
 			this.menuView.Name = "menuView";
 			this.menuView.Size = new System.Drawing.Size(44, 20);
 			this.menuView.Text = "View";
@@ -497,6 +501,17 @@
 			this.btnStopAllAudios.UseVisualStyleBackColor = true;
 			this.btnStopAllAudios.Click += new System.EventHandler(this.btnStopAllAudios_Click);
 			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 6);
+			// 
+			// debugLogToolStripMenuItem
+			// 
+			this.debugLogToolStripMenuItem.Name = "debugLogToolStripMenuItem";
+			this.debugLogToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.debugLogToolStripMenuItem.Text = "Debug log";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,6 +585,8 @@
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsRefreshExtensions;
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsRefreshAudios;
 		private System.Windows.Forms.ToolStripMenuItem acceptedExtensionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem debugLogToolStripMenuItem;
 
 	}
 }
