@@ -124,13 +124,13 @@ namespace Micspam
 				}
 
 				string extension = Path.GetExtension(file);
-				string name = Path.GetFileNameWithoutExtension(file);
 				string fullPath = Path.GetFullPath(file);
+				string name = AudioTags.GetName(fullPath);
 				string source = Extensions.GetPartOfPathAfter(fullPath, Path.GetFileName(path));
 				string type = GetExtensionName(extension);
-				TimeSpan length = AudioLength.Get(fullPath);
+				TimeSpan length = AudioTags.GetLength(fullPath);
 
-				//Console.WriteLine("\"{0}\", \"{1}\"", file, Path.GetFileName(path));
+				Log.WriteLine("Name: {0}", name);
 
 				AudioInfo info = new AudioInfo(index, name, fullPath, type, length);
 				info.PopulateDevices(devices.ToArray());

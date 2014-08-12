@@ -11,7 +11,7 @@ namespace Micspam
 	{
 		public static void WriteLine(string message, params object[] args)
 		{
-			Trace.WriteLine(String.Format(message, args), "Program");
+			Trace.WriteLine(String.Format(message, args));
 		}
 	}
 }

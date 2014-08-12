@@ -264,6 +264,7 @@ namespace Micspam
 
 			extensions.Clear();
 			extensions.AddRange(changes);
+			AudioTags.UpdateAllowedExtensions(extensions.Select(e => e.Item1).ToArray());
 
 			Log.WriteLine("Loaded {0} extensions", loaded);
 		}
