@@ -550,5 +550,16 @@ namespace Micspam
 			form.PopulateExtensionList(extensions.ToArray());
 			form.ShowDialog(this);
 		}
+
+		private void listAudios_DoubleClick(object sender, EventArgs e)
+		{
+			AudioInfo info = GetAudioInfoOf(listAudios.SelectedItems[0]);
+			if (!info.Playing)
+				PlayAudio(info);
+			else
+				info.Stop();
+
+			UpdateAudioSettingsPanel(info);
+		}
 	}
 }

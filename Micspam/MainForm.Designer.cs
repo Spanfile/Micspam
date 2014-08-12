@@ -53,6 +53,8 @@
 			this.menuViewOutputDevices = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewAudioDir = new System.Windows.Forms.ToolStripMenuItem();
 			this.acceptedExtensionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.debugLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDir = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDirBrowse = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,8 +73,6 @@
 			this.lblAudioSourceDir = new System.Windows.Forms.Label();
 			this.lblGlobalVolumeValue = new System.Windows.Forms.Label();
 			this.btnStopAllAudios = new System.Windows.Forms.Button();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.debugLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupAudioSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackAudioVolume)).BeginInit();
 			this.menuMain.SuspendLayout();
@@ -107,6 +107,7 @@
 			this.listAudios.UseCompatibleStateImageBehavior = false;
 			this.listAudios.View = System.Windows.Forms.View.Details;
 			this.listAudios.SelectedIndexChanged += new System.EventHandler(this.listAudios_SelectedIndexChanged);
+			this.listAudios.DoubleClick += new System.EventHandler(this.listAudios_DoubleClick);
 			// 
 			// columnAudioPlaying
 			// 
@@ -315,6 +316,17 @@
 			this.acceptedExtensionsToolStripMenuItem.Text = "Accepted extensions";
 			this.acceptedExtensionsToolStripMenuItem.Click += new System.EventHandler(this.acceptedExtensionsToolStripMenuItem_Click);
 			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 6);
+			// 
+			// debugLogToolStripMenuItem
+			// 
+			this.debugLogToolStripMenuItem.Name = "debugLogToolStripMenuItem";
+			this.debugLogToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.debugLogToolStripMenuItem.Text = "Debug log";
+			// 
 			// menuSettings
 			// 
 			this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -500,17 +512,6 @@
 			this.btnStopAllAudios.Text = "Stop all audios";
 			this.btnStopAllAudios.UseVisualStyleBackColor = true;
 			this.btnStopAllAudios.Click += new System.EventHandler(this.btnStopAllAudios_Click);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 6);
-			// 
-			// debugLogToolStripMenuItem
-			// 
-			this.debugLogToolStripMenuItem.Name = "debugLogToolStripMenuItem";
-			this.debugLogToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.debugLogToolStripMenuItem.Text = "Debug log";
 			// 
 			// MainForm
 			// 
