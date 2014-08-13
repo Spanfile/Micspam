@@ -195,7 +195,7 @@
 			// 
 			this.lblAudioVolumeValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblAudioVolumeValue.AutoSize = true;
-			this.lblAudioVolumeValue.Location = new System.Drawing.Point(215, 227);
+			this.lblAudioVolumeValue.Location = new System.Drawing.Point(236, 227);
 			this.lblAudioVolumeValue.Name = "lblAudioVolumeValue";
 			this.lblAudioVolumeValue.Size = new System.Drawing.Size(33, 13);
 			this.lblAudioVolumeValue.TabIndex = 6;
