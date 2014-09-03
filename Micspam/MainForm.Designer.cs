@@ -53,8 +53,6 @@
 			this.menuViewOutputDevices = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuViewAudioDir = new System.Windows.Forms.ToolStripMenuItem();
 			this.acceptedExtensionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.debugLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDir = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSettingsChangeDirBrowse = new System.Windows.Forms.ToolStripMenuItem();
@@ -288,9 +286,7 @@
 			this.menuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuViewOutputDevices,
             this.menuViewAudioDir,
-            this.acceptedExtensionsToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.debugLogToolStripMenuItem});
+            this.acceptedExtensionsToolStripMenuItem});
 			this.menuView.Name = "menuView";
 			this.menuView.Size = new System.Drawing.Size(44, 20);
 			this.menuView.Text = "View";
@@ -315,17 +311,6 @@
 			this.acceptedExtensionsToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.acceptedExtensionsToolStripMenuItem.Text = "Accepted extensions";
 			this.acceptedExtensionsToolStripMenuItem.Click += new System.EventHandler(this.acceptedExtensionsToolStripMenuItem_Click);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 6);
-			// 
-			// debugLogToolStripMenuItem
-			// 
-			this.debugLogToolStripMenuItem.Name = "debugLogToolStripMenuItem";
-			this.debugLogToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.debugLogToolStripMenuItem.Text = "Debug log";
 			// 
 			// menuSettings
 			// 
@@ -586,8 +571,6 @@
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsRefreshExtensions;
 		private System.Windows.Forms.ToolStripMenuItem menuSettingsRefreshAudios;
 		private System.Windows.Forms.ToolStripMenuItem acceptedExtensionsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem debugLogToolStripMenuItem;
 
 	}
 }

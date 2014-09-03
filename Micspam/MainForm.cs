@@ -24,6 +24,7 @@ namespace Micspam
 
 		string audioSourceDir = "sources";
 		bool searchChildren = true;
+		bool acceptNetwork = true;
 
 		List<AudioInfo> audioInfos;
 		List<Tuple<string, string>> extensions;
@@ -379,6 +380,31 @@ namespace Micspam
 
 			deviceInfos = new List<DeviceInfo>();
 			RefreshDevices();
+
+			if (acceptNetwork)
+			{
+				ExtCommandListener listener = new ExtCommandListener(1337);
+
+				listener.CommandReceived += listener_CommandReceived;
+
+				listener.Start();
+			}
+		}
+
+		void listener_CommandReceived(object sender, CommandEventArgs e)
+		{
+			switch (e.Action)
+			{
+				case "play":
+					AudioInfo info = audioInfos[e.ID];
+					PlayAudio(info);
+					UpdateAudioSettingsPanel(info);
+					break;
+
+				default:
+					Console.WriteLine("Unimplemented action: {0}", e.Action);
+					break;
+			}
 		}
 
 		private void MainForm_Shown(object sender, EventArgs e)

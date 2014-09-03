@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Micspam</RootNamespace>
     <AssemblyName>Micspam</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +38,9 @@
   <ItemGroup>
     <Reference Include="CSCore">
       <HintPath>..\packages\CSCore.0.9.2\lib\net35-client\CSCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\..\lidgren-network-gen3\Lidgren.Network\bin\Release\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
@@ -71,6 +75,7 @@
     <Compile Include="DevicesForm.Designer.cs">
       <DependentUpon>DevicesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtCommandListener.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="LoadAudiosForm.cs">
       <SubType>Form</SubType>
@@ -109,6 +114,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
